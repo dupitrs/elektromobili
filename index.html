@@ -67,36 +67,6 @@
 <body>
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Pāriet uz saturu</a>
 
-  <!-- ===== Entry gate (the tap that enters also starts the music) ===== -->
-  <div class="enter-gate" id="enterGate" role="dialog" aria-modal="true" aria-labelledby="enterTitle">
-    <div class="enter-inner">
-      <span class="enter-mark" aria-hidden="true">
-        <svg viewBox="0 0 44 44" width="62" height="62" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="22" cy="22" r="20.8" stroke-width="1" opacity=".5"/>
-          <circle cx="22" cy="22" r="16.6" stroke-width="1.1"/>
-          <path d="M11.5 18.8 q10.5 -3.3 21 0" />
-          <path d="M13 19 V22 M31 19 V22" />
-          <rect x="12.5" y="22" width="19" height="5.8" rx="2" fill="currentColor" stroke="none"/>
-          <circle cx="16.6" cy="29.6" r="2.4" fill="currentColor" stroke="none"/>
-          <circle cx="27.4" cy="29.6" r="2.4" fill="currentColor" stroke="none"/>
-          <path d="M23 9 l-3.4 5.6 h2.5 l-1.4 3.8 3.8-5.2 h-2.5 z" fill="currentColor" stroke="none"/>
-        </svg>
-      </span>
-      <p class="enter-eyebrow" data-i18n="enter.eyebrow">Rundāles pils dārzs</p>
-      <h2 class="enter-title" id="enterTitle" data-i18n="enter.title">Elektromobilis Rundālē</h2>
-      <p class="enter-sub" data-i18n="enter.sub">Ieejiet ar Vivaldi “Pavasara” skaņām un izbaudiet aristokrātisku atpūtu dārzā.</p>
-      <button class="enter-btn" id="enterBtn" type="button">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-        </svg>
-        <span data-i18n="enter.cta">Ieiet ar mūziku</span>
-      </button>
-      <button class="enter-silent" id="enterSilent" type="button" data-i18n="enter.silent">Ieiet bez skaņas</button>
-    </div>
-  </div>
-
   <!-- ===== Header ===== -->
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
@@ -271,31 +241,22 @@
         </div>
         <div class="gal-grid">
           <button class="gal-item gal-tall reveal" data-full="assets/img/gallery-1.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-1.jpg" width="1500" height="990" loading="lazy" alt="Divi elektromobiļi ar sarkaniem jumtiņiem pie vēsturiska akmens mūra saulainā dārzā." />
-          </button>
-          <button class="gal-item reveal" data-full="assets/img/gallery-3.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-3.jpg" width="1500" height="1125" loading="lazy" alt="Svinīgi dekorēti elektromobiļi pie pils strūklakas zelta vakara gaismā." />
+            <img src="assets/img/gallery-1.jpg" width="1075" height="1433" loading="lazy" alt="Sarkanas un oranžas puķes dārza parterī, elektromobilis ar viesiem fonā zilā vasaras debesī." />
           </button>
           <button class="gal-item reveal" data-full="assets/img/gallery-2.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-2.jpg" width="912" height="900" loading="lazy" alt="Elektromobiļi franču dārza parterī zilā vasaras debesī." />
+            <img src="assets/img/gallery-2.jpg" width="1600" height="1200" loading="lazy" alt="Trīs baltie elektromobiļi ar uzrakstu „Ekskursija pa parku” gaida pie Rundāles pils dzeltenās fasādes." />
           </button>
-          <button class="gal-item gal-wide reveal" data-full="assets/img/gallery-4.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-4.jpg" width="1417" height="941" loading="lazy" alt="Svētku gājiens ar zaļumu vītnēm rotātu elektromobili gar pils fasādi." />
+          <button class="gal-item reveal" data-full="assets/img/gallery-3.jpg" aria-label="Atvērt bildi">
+            <img src="assets/img/gallery-3.jpg" width="2000" height="1500" loading="lazy" alt="Jauniešu pūtēju orķestris sarkanos tērpos pie elektromobiļiem Rundāles pils dārzā." />
+          </button>
+          <button class="gal-item gal-tall reveal" data-full="assets/img/gallery-4.jpg" aria-label="Atvērt bildi">
+            <img src="assets/img/gallery-4.jpg" width="1079" height="1452" loading="lazy" alt="Elektromobilis „Ekskursija pa parku” pie Rundāles pils dzeltenās fasādes rudens saulē." />
           </button>
           <button class="gal-item reveal" data-full="assets/img/gallery-5.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-5.jpg" width="1280" height="960" loading="lazy" alt="Gids baltā tērpā stāsta dārza alejā ar pili fonā." />
-          </button>
-          <button class="gal-item reveal" data-full="assets/img/experience.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/experience.jpg" width="1600" height="898" loading="lazy" alt="Elektromobilis pie Rundāles pils sānu fasādes." />
+            <img src="assets/img/gallery-5.jpg" width="1600" height="1200" loading="lazy" alt="Elektromobilis ar viesiem pie strūklakas Rundāles pils franču dārzā saulainā dienā." />
           </button>
           <button class="gal-item reveal" data-full="assets/img/gallery-6.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-6.jpg" width="1280" height="960" loading="lazy" alt="Gids dārza alejā ar pili fonā, elektromobiļu sarkanie jumtiņi priekšplānā." />
-          </button>
-          <button class="gal-item gal-wide reveal" data-full="assets/img/gallery-7.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-7.jpg" width="1280" height="960" loading="lazy" alt="Rundāles pils atspoguļojas dārza dīķī mākoņainā dienā." />
-          </button>
-          <button class="gal-item reveal" data-full="assets/img/gallery-8.jpg" aria-label="Atvērt bildi">
-            <img src="assets/img/gallery-8.jpg" width="1400" height="1050" loading="lazy" alt="Rožu pergola un puķu dobes Rundāles pils franču dārzā." />
+            <img src="assets/img/gallery-6.jpg" width="1059" height="981" loading="lazy" alt="Ģimenes elektromobilī ar sarkano jumtiņu pie Rundāles pils un rožu dobēm." />
           </button>
         </div>
       </div>

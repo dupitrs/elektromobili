@@ -89,13 +89,7 @@
     "contact.mapLink": "Open in Google Maps →",
 
     "footer.tagline": "Aristocratic leisure in the Rundāle Palace garden by electric car.",
-    "footer.credit": "Made by",
-
-    "enter.eyebrow": "Rundāle Palace garden",
-    "enter.title": "Elektromobilis Rundālē",
-    "enter.sub": "Step inside to Vivaldi's “Spring” and enjoy aristocratic leisure in the garden.",
-    "enter.cta": "Enter with music",
-    "enter.silent": "Enter without sound"
+    "footer.credit": "Made by"
   };
 
   var TITLES = {
@@ -293,20 +287,9 @@
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 
-  /* ---------- Background music + entry gate ---------- */
+  /* ---------- Background music ---------- */
   var audio = document.getElementById("bgAudio");
   var audioBtn = document.getElementById("audioToggle");
-
-  // Start (or resume) the music. Called from a real user gesture — the entry
-  // button or the floating toggle — so it satisfies browser autoplay policy.
-  function audioPlay() {
-    if (!audio) return;
-    audio.muted = false;
-    if (audio.preload !== "auto") audio.preload = "auto"; // fetch the mp3 only now
-    var pr = audio.play();
-    if (pr && pr.catch) pr.catch(function () {});
-  }
-
   if (audio && audioBtn) {
     audio.volume = 0.35;
     audio.loop = true;
@@ -324,6 +307,28 @@
       audioBtn.setAttribute("aria-label", playing ? AUDIO_LABEL[lang].on : AUDIO_LABEL[lang].off);
     }
 
+    function audioPlay() {
+      audio.muted = false;
+      if (audio.preload !== "auto") audio.preload = "auto"; // fetch the mp3 only now
+      var pr = audio.play();
+      if (pr && pr.catch) pr.catch(function () {});
+    }
+
+    // Browsers block sound until the visitor interacts, so start on the very
+    // first gesture anywhere (scroll / tap / click / key). This is as close to
+    // "plays on entry" as browser autoplay policy allows, and it keeps the mp3
+    // out of the initial load (preload stays "none" until that first gesture).
+    var GESTURES = ["pointerdown", "keydown", "touchstart", "wheel", "scroll"];
+    function removeFirstGesture() {
+      GESTURES.forEach(function (ev) { window.removeEventListener(ev, firstGesture, true); });
+    }
+    function firstGesture(e) {
+      if (audioBtn.contains(e.target)) { removeFirstGesture(); return; }
+      if (audio.paused) audioPlay();
+      removeFirstGesture();
+    }
+    GESTURES.forEach(function (ev) { window.addEventListener(ev, firstGesture, true); });
+
     audioBtn.addEventListener("click", function () {
       if (audio.paused || audio.muted) audioPlay();
       else audio.pause();
@@ -337,27 +342,5 @@
       b.addEventListener("click", audioUI);
     });
     audioUI();
-  }
-
-  // Entry gate: the visitor's tap to enter is the gesture that lets the
-  // music begin instantly. "Enter without sound" simply opens the page silent.
-  var gate = document.getElementById("enterGate");
-  if (gate) {
-    var enterBtn = document.getElementById("enterBtn");
-    var enterSilent = document.getElementById("enterSilent");
-    document.body.classList.add("gate-open");
-
-    var gateGone = false;
-    function closeGate(withSound) {
-      if (gateGone) return;
-      gateGone = true;
-      if (withSound) audioPlay();
-      gate.classList.add("is-leaving");
-      document.body.classList.remove("gate-open");
-      window.setTimeout(function () { gate.hidden = true; }, 760);
-    }
-    if (enterBtn) enterBtn.addEventListener("click", function () { closeGate(true); });
-    if (enterSilent) enterSilent.addEventListener("click", function () { closeGate(false); });
-    try { (enterBtn || gate).focus(); } catch (e) {}
   }
 })();
