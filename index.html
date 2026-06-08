@@ -3,17 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Elektromobilis Rundālē · ekskursijas ar elektromobili pa Rundāles pils dārzu</title>
-  <meta name="description" content="Aristokrātiska atpūta Rundāles pils dārzā: ~20 minūšu brauciens ar elektromobili pa franču dārza skaistākajām vietām ar stāstījumu 13 valodās. 5 € personai. No maija līdz oktobrim." />
+  <title>Elektromobilis Rundālē · ekskursija pa Rundāles pils dārzu | Rundāles Tour</title>
+  <meta name="description" content="Elektromobilis Rundālē — aristokrātiska ~20 min ekskursija pa Rundāles pils franču dārzu ar stāstījumu 13 valodās. 5 € personai. Pilsrundāle, Bauskas novads · no maija līdz oktobrim." />
+  <meta name="keywords" content="elektromobilis Rundālē, Rundāle elektromobilis, Pilsrundāle elektromobilis, Rundāles pils, Rundāles pils dārzs, Rundāle ekskursija, Pilsrundāle ekskursija, Rundāles tūre, Rundāle tour, ekskursija ar elektromobili" />
   <meta name="theme-color" content="#9A2D22" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.rundalestour.lv/" />
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="lv_LV" />
-  <meta property="og:title" content="Elektromobilis Rundālē · ekskursijas pa pils dārzu" />
-  <meta property="og:description" content="~20 minūšu brauciens pa franču dārza skaistākajām vietām ar stāstījumu 13 valodās. 5 € personai." />
-  <meta property="og:image" content="assets/img/hero.jpg" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="Rundāles Tour · Elektromobilis Rundālē" />
+  <meta property="og:url" content="https://www.rundalestour.lv/" />
+  <meta property="og:title" content="Elektromobilis Rundālē · ekskursija pa Rundāles pils dārzu" />
+  <meta property="og:description" content="~20 min brauciens pa Rundāles pils franču dārzu ar stāstījumu 13 valodās. 5 € personai. Pilsrundāle, Bauskas novads." />
+  <meta property="og:image" content="https://www.rundalestour.lv/assets/img/hero.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.rundalestour.lv/assets/img/hero.jpg" />
 
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
 
@@ -30,8 +37,12 @@
     "@context": "https://schema.org",
     "@type": "TouristAttraction",
     "name": "Elektromobilis Rundālē",
+    "alternateName": "Rundāles Tour",
+    "url": "https://www.rundalestour.lv/",
     "description": "Ekskursijas ar elektromobili pa Rundāles pils dārzu un apkārtni ar stāstījumu 13 valodās.",
-    "image": "assets/img/hero.jpg",
+    "image": "https://www.rundalestour.lv/assets/img/hero.jpg",
+    "keywords": "elektromobilis Rundālē, Rundāle elektromobilis, Pilsrundāle, Rundāles pils dārzs, Rundāle ekskursija, Rundāles tūre",
+    "areaServed": "Rundāle, Pilsrundāle, Bauskas novads, Latvija",
     "telephone": "+371 29169034",
     "email": "emobilis@inbox.lv",
     "priceRange": "5 EUR",
@@ -55,6 +66,36 @@
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Pāriet uz saturu</a>
+
+  <!-- ===== Entry gate (the tap that enters also starts the music) ===== -->
+  <div class="enter-gate" id="enterGate" role="dialog" aria-modal="true" aria-labelledby="enterTitle">
+    <div class="enter-inner">
+      <span class="enter-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" width="62" height="62" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="22" cy="22" r="20.8" stroke-width="1" opacity=".5"/>
+          <circle cx="22" cy="22" r="16.6" stroke-width="1.1"/>
+          <path d="M11.5 18.8 q10.5 -3.3 21 0" />
+          <path d="M13 19 V22 M31 19 V22" />
+          <rect x="12.5" y="22" width="19" height="5.8" rx="2" fill="currentColor" stroke="none"/>
+          <circle cx="16.6" cy="29.6" r="2.4" fill="currentColor" stroke="none"/>
+          <circle cx="27.4" cy="29.6" r="2.4" fill="currentColor" stroke="none"/>
+          <path d="M23 9 l-3.4 5.6 h2.5 l-1.4 3.8 3.8-5.2 h-2.5 z" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <p class="enter-eyebrow" data-i18n="enter.eyebrow">Rundāles pils dārzs</p>
+      <h2 class="enter-title" id="enterTitle" data-i18n="enter.title">Elektromobilis Rundālē</h2>
+      <p class="enter-sub" data-i18n="enter.sub">Ieejiet ar Vivaldi “Pavasara” skaņām un izbaudiet aristokrātisku atpūtu dārzā.</p>
+      <button class="enter-btn" id="enterBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span data-i18n="enter.cta">Ieiet ar mūziku</span>
+      </button>
+      <button class="enter-silent" id="enterSilent" type="button" data-i18n="enter.silent">Ieiet bez skaņas</button>
+    </div>
+  </div>
 
   <!-- ===== Header ===== -->
   <header class="site-header" id="siteHeader">

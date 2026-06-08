@@ -436,6 +436,70 @@ h1, h2, h3 { line-height: 1.08; font-weight: 600; }
   60%, 100% { box-shadow: 0 10px 26px rgba(20,18,17,.32), 0 0 0 8px rgba(154,45,34,0); }
 }
 
+/* ---------- Entry gate ---------- */
+.enter-gate {
+  position: fixed; inset: 0; z-index: 3000;
+  display: grid; place-items: center;
+  padding: 28px; text-align: center;
+  color: var(--cream);
+  background:
+    radial-gradient(120% 100% at 50% -8%, rgba(176,141,79,.30), transparent 58%),
+    linear-gradient(180deg, #221d1b 0%, #15110f 100%);
+  opacity: 1;
+  transition: opacity .7s var(--ease), visibility .7s var(--ease);
+}
+.enter-gate[hidden] { display: none; }
+.enter-gate.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.enter-inner {
+  max-width: 31rem;
+  display: flex; flex-direction: column; align-items: center;
+  animation: enterRise .85s var(--ease) both;
+}
+.enter-mark { color: var(--gold); margin-bottom: 18px; }
+.enter-eyebrow {
+  text-transform: uppercase; letter-spacing: .26em;
+  font-size: .72rem; font-weight: 700; color: var(--gold);
+  margin-bottom: 13px;
+}
+.enter-title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.95rem, 5.4vw, 2.95rem); line-height: 1.04;
+  margin-bottom: 14px;
+}
+.enter-sub {
+  color: rgba(250,246,236,.78); font-size: 1.02rem; line-height: 1.6;
+  max-width: 27rem; margin-bottom: 30px;
+}
+.enter-btn {
+  display: inline-flex; align-items: center; gap: 11px;
+  font-family: var(--sans); font-weight: 700; font-size: 1.02rem;
+  color: var(--dark); background: var(--cream);
+  border: none; border-radius: 999px;
+  padding: 15px 30px; cursor: pointer;
+  box-shadow: 0 14px 36px rgba(0,0,0,.42);
+  transition: transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.enter-btn:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 18px 46px rgba(0,0,0,.5); }
+.enter-btn:active { transform: translateY(0); }
+.enter-btn svg {
+  width: 20px; height: 20px; fill: none; stroke: var(--brand);
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.enter-silent {
+  margin-top: 16px; background: none; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: .9rem; font-weight: 600;
+  color: rgba(250,246,236,.6);
+  border-bottom: 1px solid transparent; padding: 2px 1px;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.enter-silent:hover { color: var(--cream); border-color: rgba(250,246,236,.5); }
+@keyframes enterRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+body.gate-open { overflow: hidden; }
+
 /* ---------- Languages ---------- */
 .languages { background: var(--dark); position: relative; overflow: hidden; }
 .languages::before {
