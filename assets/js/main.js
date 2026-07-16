@@ -89,7 +89,7 @@
     "contact.mapLink": "Open in Google Maps →",
 
     "footer.tagline": "Aristocratic leisure in the Rundāle Palace garden by electric car.",
-    "footer.credit": "Made by"
+    "footer.credit": "Developed by"
   };
 
   var TITLES = {
