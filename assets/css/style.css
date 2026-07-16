@@ -246,6 +246,47 @@ h1, h2, h3 { line-height: 1.08; font-weight: 600; }
 .lang-toggle button.is-active { background: var(--gold); color: #2a210e; }
 .site-header.scrolled .lang-toggle button.is-active { background: var(--brand); color: var(--cream); }
 
+/* ---------- Language switcher (14-language dropdown) ---------- */
+.lang-switch { position: relative; }
+.lang-current {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line-light); border-radius: 999px;
+  background: rgba(250, 246, 236, 0.06); backdrop-filter: blur(4px);
+  color: rgba(250, 246, 236, 0.9);
+  font-family: var(--sans); font-weight: 700; font-size: 0.8rem; letter-spacing: .06em;
+  padding: 6px 11px 6px 8px; cursor: pointer;
+  transition: background-color .25s, color .25s, border-color .25s;
+}
+.lang-current:hover { background: rgba(250, 246, 236, 0.12); }
+.site-header.scrolled .lang-current { color: var(--ink-soft); border-color: var(--line); background: rgba(30, 27, 26, 0.04); }
+.site-header.scrolled .lang-current:hover { background: rgba(30, 27, 26, 0.08); }
+.lang-cur-flag { width: 22px; height: 16px; border-radius: 3px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,.35); flex: none; }
+.lang-cur-code { line-height: 1; }
+.lang-caret { width: 11px; height: 8px; opacity: .8; transition: transform .25s var(--ease); }
+.lang-switch.open .lang-caret { transform: rotate(180deg); }
+
+.lang-menu {
+  position: absolute; top: calc(100% + 10px); right: 0; z-index: 60;
+  min-width: 190px; max-height: min(70vh, 460px); overflow-y: auto;
+  margin: 0; padding: 6px; list-style: none;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow-lg);
+  animation: langMenuIn .18s var(--ease);
+}
+@keyframes langMenuIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.lang-menu li {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 9px; cursor: pointer;
+  color: var(--ink); font-size: 0.92rem; font-weight: 600;
+  transition: background-color .15s;
+}
+.lang-menu li:hover { background: var(--cream-2); }
+.lang-menu li.is-active { background: var(--brand); color: var(--cream); }
+.lang-menu li.is-active .lang-menu-code { color: rgba(250, 246, 236, 0.75); }
+.lang-menu li img { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,.25); flex: none; }
+.lang-menu-native { flex: 1 1 auto; }
+.lang-menu-code { font-size: 0.72rem; letter-spacing: .07em; color: var(--ink-soft); font-weight: 700; }
+
 .nav-toggle {
   display: none;
   width: 44px; height: 44px;
