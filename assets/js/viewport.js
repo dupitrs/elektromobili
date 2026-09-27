@@ -30,6 +30,11 @@ function readHeight() {
 }
 
 let height = readHeight(), width = onPage ? innerWidth : 0;
+const touchViewport = onPage && matchMedia("(pointer: coarse)").matches;
+function publishHeight() {
+  if (onPage) document.documentElement.style.setProperty("--viewport-height", height + "px");
+}
+publishHeight();
 
 // Cached: the value only changes on a real viewport change, and reading the
 // probe forces layout, which no scroll frame should have to pay for.
@@ -44,11 +49,15 @@ let timer = 0;
 
 function settle() {
   timer = 0;
+  // Toolbar/keyboard changes must not rebuild the road during a gesture.
+  // A rotation changes width and gets a fresh shared CSS/JS height.
+  if (touchViewport && innerWidth === width) return;
   const nextWidth = innerWidth, nextHeight = readHeight();
   // A collapsing toolbar leaves both numbers alone. Rotating the phone,
   // resizing a window or opening a desktop sidebar changes them.
   if (nextWidth === width && Math.abs(nextHeight - height) < 2) return;
   width = nextWidth; height = nextHeight;
+  publishHeight();
   for (const listener of [...listeners]) listener();
 }
 

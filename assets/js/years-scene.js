@@ -1,8 +1,8 @@
-import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-2";
-import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-2";
-import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-2";
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-2";
-import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-2";
+import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-3";
+import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-3";
+import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-3";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-3";
+import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-3";
 
 /* The camera never moves. Pre-rendered views of the original 3D models keep
    their detail without rebuilding geometry or shadows while the page scrolls. */
@@ -37,7 +37,7 @@ export async function createGarden(section) {
   }
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   let width = 0, height = 0, scale = 1, centerX = 0, centerZ = 3, sectionTop = 0;
-  let pinTop = 84, scrollDistance = 900, elapsed = -1, raf = 0, active = true;
+  let pinTop = 84, scrollDistance = 900, elapsed = -1, raf = 0, layoutRaf = 0, active = true;
   let pixelRatio = 1, colorReturn = 0, paintedBackdrop = "", paintedEmphasis = "";
 
   function project(x, y, z) {
@@ -192,6 +192,11 @@ export async function createGarden(section) {
     });
   }
   function stop() { cancelAnimationFrame(raf); raf = 0; }
+  function requestResize() {
+    // ResizeObserver callbacks must not synchronously resize their own pin.
+    // Coalesce rotation, journey and font changes into the next layout frame.
+    if (!layoutRaf) layoutRaf = requestAnimationFrame(() => { layoutRaf = 0; resize(); });
+  }
 
   resize();
   section.classList.add("is-3d-ready");
@@ -199,13 +204,13 @@ export async function createGarden(section) {
       active = entries[0].isIntersecting;
       if (active) onScroll(); else stop();
     }, { rootMargin: "120px" }).observe(section);
-  new ResizeObserver(resize).observe(pin);
+  new ResizeObserver(requestResize).observe(pin);
   scroll.on("scroll", onScroll);
-  onViewportChange(resize);
+  onViewportChange(requestResize);
   document.addEventListener("visibilitychange", () => document.hidden ? stop() : onScroll());
-  document.addEventListener("erm:langchange", () => requestAnimationFrame(resize));
-  document.addEventListener("erm:journeylayout", resize);
-  motionPreference.addEventListener("change", resize);
-  document.fonts.ready.then(resize);
-  document.fonts.addEventListener("loadingdone", resize);
+  document.addEventListener("erm:langchange", requestResize);
+  document.addEventListener("erm:journeylayout", requestResize);
+  motionPreference.addEventListener("change", requestResize);
+  document.fonts.ready.then(requestResize);
+  document.fonts.addEventListener("loadingdone", requestResize);
 }

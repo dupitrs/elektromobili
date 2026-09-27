@@ -120,7 +120,8 @@ dārzu un apkārtni. Statiska lapa — tikai HTML, CSS un JavaScript, bez build 
   Kamera ir fiksēta tieši dienvidos, vērsta uz ziemeļiem, atstājot vietu uzrakstam zem cipariem.
   `prefers-reduced-motion` rāda uzreiz gatavu kompozīciju. Ja animācijas attēli nav
   pieejami, redzama fotogrāfija un teksts. Kopīgais kartes fons ielādējas līdz ar blakus dārziem;
-  pati animācija sāk ielādēties 320 px pirms sadaļas. Visi attēli ir vietēji.
+  pati animācija arī tiek sagatavota uzreiz, lai strauja ritināšana neizraisītu
+  fotogrāfijas nomaiņu ar karti jau redzamajā sadaļā. Visi attēli ir vietēji.
   WebGL un Three.js apmeklētāja pārlūkā vairs nav vajadzīgi.
   Ritinājuma vieta tiek rezervēta uzreiz. Vēla attēlu ielāde pielāgojas pašreizējai
   ritināšanas pozīcijai un nemaina sadaļas augstumu.
@@ -166,7 +167,7 @@ assets/
   js/journey-bake.js    # 3D dekorāciju attēlu ģenerēšana
   js/garden-assets.js   # kopīgi dekodētie mašīnu un piekabju skati
   js/visit-weather.js   # lietus aina un maršrutam atbilstošas riteņu sliedes
-  js/years.js           # 17 gadu animācijas atliktā ielāde
+  js/years.js           # 17 gadu animācijas agrīna sagatavošana
   js/years-layout.js    # pilna ekrāna sadaļas izmēri un kopīgs kartes/alejas kadrējums
   js/years-scene.js     # viegla Canvas 2D animācija ar iepriekš renderētiem skatiem
   js/years-bake.js      # 3D dārzs un kadru ģenerēšana; lapā neielādējas
@@ -202,12 +203,36 @@ apstādījumus un attēlus sagatavo atsevišķs Web Worker ar OffscreenCanvas,
 sākot ar tuvākajiem posmiem. Smagie aprēķini un zīmēšana nebloķē ritināšanu;
 mainoties izmēram, worker saglabā tikai jaunāko gaidošo izkārtojumu katram posmam.
 Dārza dekorācijas negaida mašīnu attēlus. Ja worker vai OffscreenCanvas nav
-pieejams, paliek parasta lasāma lapa. Kopīgo 17 gadu kartes fonu sāk ielādēt 1200 px pirms
-kartes priekšējā dārza posma; tas nekonkurē ar pirmā ekrāna resursiem.
+pieejams, paliek parasta lasāma lapa. Kopīgo 17 gadu kartes fonu un mašīnu atlasus
+sāk ielādēt uzreiz. Abi piegulošie dārzi tiek uzzīmēti tikai ar gatavu kopīgo fonu,
+tādēļ ritinot nepārslēdzas no pagaidu dārza uz citu kompozīciju.
 `check-gardens.mjs` pārbauda arī vieglā un pilnā maršruta sakritību.
 Ritināšanu pārbauda `node scripts/check-journey-scroll.cjs http://localhost:8000`
 (telefonam pievieno `390 844`). Tas pārbauda visus astoņus dārzus un 17 gadu
 ainu un ziņo par gariem galvenā pavediena darbiem 12 sekunžu ritināšanas laikā.
+
+Telefonā ievada video darbojas arī ar izslēgtu skaņu un `playsinline`.
+Ja automātisko atskaņošanu pārlūks bloķē, to var palaist ar pogu pie cenas.
+Samazinātas kustības un datu taupīšanas režīmā atskaņošana sākas tikai pēc pogas nospiešanas.
+Ārpus ievada un paslēptā cilnē video tiek apturēts. Pieskāriena ierīcēs teksts un
+fotogrāfijas ir redzami uzreiz, bez parādīšanās animācijas gaidīšanas.
+Mašīnas Canvas ir absolūti novietots dārza koordinātās: pārlūka ritināšana pārvieto
+mašīnu un celiņu kopā arī starp JavaScript kadriem. Telefona pārlūka joslas augstuma
+maiņa nepārrēķina dārzus; pagriežot ekrānu, izkārtojums tiek pārrēķināts.
+
+`scripts/check-mobile.cjs` pārbauda video, bloķētas automātiskās atskaņošanas atkopšanu,
+mašīnas un ceļa sakritību starp kadriem, dārzu stabilitāti strauji ritinot,
+pārlūka joslas izmēra maiņu, navigāciju, galeriju, valodas un samazinātu kustību.
+Nepieciešama Playwright instalācija ar Chromium vai WebKit:
+
+```bash
+PLAYWRIGHT_MODULE=/path/to/playwright node scripts/check-mobile.cjs chromium
+PLAYWRIGHT_MODULE=/path/to/playwright node scripts/check-mobile.cjs webkit
+```
+
+Tests pats palaiž lokālu serveri ar MP4 baitu diapazonu atbalstu. Ekrānattēli tiek
+saglabāti `/tmp/mobile-fixed-*.png`. Google Maps ārējais iframe testā tiek aizstāts
+ar tukšu lapu; tā darbība jāpārbauda atsevišķi. Tests neaizstāj pārbaudi fiziskā iPhone.
 
 Palaid lokālu serveri (3D sadaļas ES moduļiem vajadzīgs HTTP, nevis `file://`):
 

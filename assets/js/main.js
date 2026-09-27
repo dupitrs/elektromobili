@@ -1284,7 +1284,7 @@
   /* ---------- Reveal on scroll ---------- */
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var revealEls = document.querySelectorAll(".reveal");
-  if (!reduce && "IntersectionObserver" in window) {
+  if (!reduce && !window.matchMedia("(pointer: coarse)").matches && "IntersectionObserver" in window) {
     document.documentElement.classList.add("has-reveal");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -1395,48 +1395,67 @@
   /* ---------- Hero video: show only after a decoded frame is ready ---------- */
   var heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
-    // On a phone the opening film costs 811 kB on the same narrow pipe that the
-    // gardens, fonts and photographs are still waiting for, and it keeps a
-    // video decoder running behind the first screen. The poster is the same
-    // frame, so the opening looks the way it should and arrives sooner.
     var link = navigator.connection || {};
-    var onPhone = Math.min(window.innerWidth, window.innerHeight) < 700;
     var sparingData = link.saveData === true || /(^|-)2g$/.test(link.effectiveType || "");
-    if (reduce || onPhone || sparingData) {
-      heroVideo.removeAttribute("autoplay");
-      try { heroVideo.pause(); } catch (e) {}
-      document.body.classList.add("no-hero-video");
-    } else {
-      heroVideo.muted = true;
-      heroVideo.addEventListener("playing", function () {
-        var showFrame = function () { heroVideo.classList.add("is-playing"); };
-        if (heroVideo.requestVideoFrameCallback) heroVideo.requestVideoFrameCallback(showFrame);
-        else showFrame();
-      });
-      heroVideo.addEventListener("error", function () { document.body.classList.add("no-hero-video"); });
-      var heroVisible = true;
-      var heroReady = false;
-      var syncHeroVideo = function () {
-        if (!heroReady || document.hidden || !heroVisible) { heroVideo.pause(); return; }
-        var pp = heroVideo.play();
-        if (pp && pp.catch) pp.catch(function () { document.body.classList.add("no-hero-video"); });
-      };
-      // Start after the opening photograph, without waiting for unrelated assets.
-      var heroPoster = document.querySelector(".hero-fallback");
-      var posterReady = heroPoster && heroPoster.decode ? heroPoster.decode().catch(function () {}) : Promise.resolve();
-      posterReady.then(function () {
-        heroReady = true;
-        syncHeroVideo();
-      });
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (entries) {
-          heroVisible = entries[0].isIntersecting;
-          syncHeroVideo();
-        }).observe(heroVideo);
-      }
-      document.addEventListener("visibilitychange", syncHeroVideo);
-      syncHeroVideo();
+    var videoButton = document.getElementById("heroVideoToggle");
+    var videoLabels = {
+      lv: ["Atskaņot video", "Apturēt video"], en: ["Play video", "Pause video"],
+      et: ["Esita video", "Peata video"], es: ["Reproducir vídeo", "Pausar vídeo"],
+      lt: ["Paleisti vaizdo įrašą", "Pristabdyti vaizdo įrašą"], fr: ["Lire la vidéo", "Mettre en pause"],
+      it: ["Riproduci video", "Pausa video"], ko: ["동영상 재생", "동영상 일시 정지"],
+      de: ["Video abspielen", "Video pausieren"], ja: ["動画を再生", "動画を一時停止"],
+      el: ["Αναπαραγωγή βίντεο", "Παύση βίντεο"], fi: ["Toista video", "Keskeytä video"],
+      ru: ["Воспроизвести видео", "Приостановить видео"], pl: ["Odtwórz film", "Wstrzymaj film"]
+    };
+    var userPaused = reduce || sparingData;
+    var heroVisible = true;
+    var heroReady = false;
+    function videoUI() {
+      var labels = videoLabels[document.documentElement.lang] || videoLabels.en;
+      videoButton.textContent = labels[heroVideo.paused ? 0 : 1];
+      videoButton.hidden = false;
     }
+    function playHero() {
+      heroVideo.muted = true;
+      var attempt = heroVideo.play();
+      if (attempt && attempt.catch) attempt.catch(videoUI);
+    }
+    function syncHeroVideo() {
+      if (!heroReady || userPaused || document.hidden || !heroVisible) { heroVideo.pause(); return; }
+      playHero();
+    }
+    heroVideo.addEventListener("playing", function () {
+      var showFrame = function () { heroVideo.classList.add("is-playing"); };
+      if (heroVideo.requestVideoFrameCallback) heroVideo.requestVideoFrameCallback(showFrame);
+      else showFrame();
+      videoUI();
+    });
+    heroVideo.addEventListener("pause", videoUI);
+    heroVideo.addEventListener("error", function () {
+      heroVideo.classList.remove("is-playing");
+      videoButton.hidden = true;
+    });
+    videoButton.addEventListener("click", function () {
+      userPaused = !heroVideo.paused;
+      if (userPaused) heroVideo.pause();
+      else playHero(); // Directly inside the gesture when autoplay is blocked.
+    });
+    document.addEventListener("erm:langchange", videoUI);
+    videoUI();
+    var heroPoster = document.querySelector(".hero-fallback");
+    var posterReady = heroPoster && heroPoster.decode ? heroPoster.decode().catch(function () {}) : Promise.resolve();
+    posterReady.then(function () {
+      heroReady = true;
+      syncHeroVideo();
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+        syncHeroVideo();
+      }).observe(document.querySelector(".hero"));
+    }
+    document.addEventListener("visibilitychange", syncHeroVideo);
+    window.addEventListener("pageshow", syncHeroVideo);
   }
   /* ---------- Footer year ---------- */
   var y = document.getElementById("year");

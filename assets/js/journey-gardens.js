@@ -1,5 +1,5 @@
-import { route } from "./years-routes.js?v=20260927-mobile-2";
-export { makeGardenBand, gardenProjection } from "./journey-formal-garden.js?v=20260927-mobile-2";
+import { route } from "./years-routes.js?v=20260927-mobile-3";
+export { makeGardenBand, gardenProjection } from "./journey-formal-garden.js?v=20260927-mobile-3";
 
 // Every approach enters from the north. Adjacent tiles share a straight avenue.
 export const gardens = [

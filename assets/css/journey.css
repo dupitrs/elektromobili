@@ -3,7 +3,6 @@
 .journey-chapter { position: relative; }
 .journey-on {
   --journey-unit: clamp(8px, 1.041667vw, 16px);
-  --journey-height: calc(100svh - var(--header-h));
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -79,10 +78,8 @@
 @media (prefers-reduced-motion: no-preference) {
   .journey-on.is-ready .journey-guide {
     display: block;
-    position: sticky;
-    top: var(--header-h);
-    height: var(--journey-height);
-    margin-bottom: calc(-1 * var(--journey-height));
+    position: absolute;
+    inset: 0;
     z-index: 3;
     pointer-events: none;
     overflow: clip;

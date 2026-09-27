@@ -1,6 +1,6 @@
-import { decodeImage } from "./garden-assets.js?v=20260927-mobile-2";
-import { gardenProjection as K } from "./journey-formal-garden.js?v=20260927-mobile-2";
-import { yearsJoinPlacement } from "./years-layout.js?v=20260927-mobile-2";
+import { decodeImage } from "./garden-assets.js?v=20260927-mobile-3";
+import { gardenProjection as K } from "./journey-formal-garden.js?v=20260927-mobile-3";
+import { yearsJoinPlacement } from "./years-layout.js?v=20260927-mobile-3";
 
 let decorations;
 const paintings = new WeakMap();

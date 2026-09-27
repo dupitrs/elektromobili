@@ -1,10 +1,10 @@
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-2";
-import { gardenPainter } from "./journey-start.js?v=20260927-mobile-2";
-import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-2";
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-2";
-import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-2";
-import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-2";
-import { viewportHeight, onViewportChange, phone } from "./viewport.js?v=20260927-mobile-2";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-3";
+import { gardenPainter } from "./journey-start.js?v=20260927-mobile-3";
+import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-3";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-3";
+import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-3";
+import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-3";
+import { viewportHeight, onViewportChange, phone } from "./viewport.js?v=20260927-mobile-3";
 
 const motion = matchMedia("(prefers-reduced-motion: reduce)");
 const K = 43 / Math.hypot(43, 36), ELEVATION = 36 / Math.hypot(43, 36);
@@ -12,16 +12,6 @@ const TAU = Math.PI * 2, HITCH = 4.02;
 const mix = (a, b, t) => a + (b - a) * t;
 const clamp = n => Math.max(0, Math.min(1, n));
 const smooth = t => t * t * t * (10 + t * (-15 + 6 * t));
-// Phones load the train's atlases only once the first screen is done.
-function afterFirstScreen() {
-  return new Promise(resolve => {
-    const whenIdle = () => typeof requestIdleCallback === "function"
-      ? requestIdleCallback(resolve, { timeout: 2000 }) : setTimeout(resolve, 300);
-    if (document.readyState === "complete") whenIdle();
-    else addEventListener("load", whenIdle, { once: true });
-  });
-}
-
 const CROSSES_CONTENT = new Set(["valodas", "apmeklejums"]);
 
 const main = document.querySelector("main");
@@ -64,7 +54,7 @@ function setupJourney() {
   });
   let sprites, yearsBackground, points = [], rows = [], routeLength = 0;
   let width = 0, height = 0, header = 0, unit = 8, pixelRatio = 1;
-  let rootTop = 0, rootBottom = 0, maxScroll = 0, spriteSize = 0, previousTrain = "";
+  let rootTop = 0, maxScroll = 0, spriteSize = 0, previousTrain = "";
   let frame = 0, layoutFrame = 0, active = false, failed = false;
   let painter;
 
@@ -82,6 +72,8 @@ function setupJourney() {
     const ordered = [...bands].sort((a, b) => Math.abs(a.top - scrollY) - Math.abs(b.top - scrollY));
     for (const band of ordered) {
       if (!band.options) continue;
+      // Never publish a different garden while the adjoining map is loading.
+      if (band.yearsJoin && (!band.yearsJoin.image || !band.yearsJoin.backdrop)) continue;
       const requested = band.key + ":" + Boolean(band.yearsJoin?.image) + ":" + Boolean(band.yearsJoin?.backdrop);
       if (band.requested === requested) continue;
       band.requested = requested;
@@ -161,26 +153,13 @@ function setupJourney() {
     return Math.max(0, Math.min(park, distanceAtY(targetY)));
   }
   function trainPose(y, distance = travelDistance(y)) {
-    // The negative bottom margin makes this sticky layer's margin-box zero
-    // high. Its bottom constraint is the garden edge, not edge minus height.
-    const layerTop = Math.min(Math.max(header, rootTop - y), rootBottom - y);
-    const pose = [vehicle(distance, sprites.car), vehicle(distance - HITCH, sprites.trailer)]
-      .map(v => ({ ...v, x: v.x * unit, y: rootTop + v.z * K * unit - y - layerTop }));
-    if (!phone) return pose;
-    // A phone scrolls on its own thread, so a position derived from scrollY
-    // here is always a frame or two behind the page: on iOS the train visibly
-    // slid down the garden and left its road. The sticky layer already holds
-    // the focus line steady without any script, so on a phone the train keeps
-    // that line exactly and only its heading and lane follow the route.
-    const drift = pose[0].y - (focusOffset() - layerTop);
-    return pose.map(v => ({ ...v, y: v.y - drift }));
+    // Draw in the garden's document coordinates. Native/compositor scrolling
+    // then moves the road and vehicles together even between script frames.
+    return [vehicle(distance, sprites.car), vehicle(distance - HITCH, sprites.trailer)]
+      .map(v => ({ ...v, x: v.x * unit, y: v.z * K * unit }));
   }
 
-  /* Between the gardens the route runs through the margin beside the text,
-     which is wide enough to drive in on a laptop. A phone has 12 px there, so
-     the train drove half off the screen with no road under it. On a phone it
-     therefore shows while it is in a garden and steps aside for the text and
-     for the 17, whose own fleet is driving on its pinned map. */
+  // On phones, leave the text and the 17 scene clear of the page-wide train.
   let trainAway = false;
   function holdTrain(away) {
     if (away === trainAway) return;
@@ -268,10 +247,9 @@ function setupJourney() {
     width = root.clientWidth; height = viewportHeight() - header;
     unit = Math.max(8, Math.min(16, width / 96));
     root.style.setProperty("--journey-unit", unit + "px");
-    root.style.setProperty("--journey-height", height + "px");
     pixelRatio = Math.min(devicePixelRatio || 1, 1.5);
     const content = stops[0].section.querySelector(".container");
-    const lane = Math.max(12, (content.getBoundingClientRect().left - root.getBoundingClientRect().left) / 2);
+    const lane = Math.max(unit * 3, (content.getBoundingClientRect().left - root.getBoundingClientRect().left) / 2);
     const languages = stops.find(stop => stop.section.id === "valodas");
     const turnSpace = 8 * K * unit + Math.max(24 * K * unit, 1.875 * (width / 2 - lane) / 2.4);
     languages.section.style.setProperty("--language-turn-space", turnSpace + "px");
@@ -292,7 +270,6 @@ function setupJourney() {
       band.element.style.height = Math.max(base * K * unit, 16 * K * unit + connectionSpace + 1.875 * bend / 2.8) + "px";
     }
     rootTop = root.getBoundingClientRect().top + scrollY;
-    rootBottom = rootTop + root.getBoundingClientRect().height;
     maxScroll = Math.max(0, document.documentElement.scrollHeight - viewportHeight());
     points = []; routeLength = 0;
     for (const band of bands) {
@@ -397,7 +374,6 @@ function setupJourney() {
         painter.postMessage({ index: band.index, canvas: surface }, [surface]);
       }
       requestPaint();
-      if (phone) await afterFirstScreen();
       sprites = await loadGardenSprites();
       if (failed) return;
       measure(); root.classList.add("is-ready");
@@ -406,16 +382,11 @@ function setupJourney() {
     }
   }
   if (yearsIndex >= 0) {
-    const backgroundObserver = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.isIntersecting)) return;
-      backgroundObserver.disconnect();
-      Promise.all([loadYearsBackground(), loadGardenSprites()]).then(([image]) => {
-        if (failed) return;
-        yearsBackground = image;
-        requestMeasure();
-      }).catch(() => {});
-    }, { rootMargin: "1200px" });
-    backgroundObserver.observe(bands[yearsIndex].element);
+    Promise.all([loadYearsBackground(), loadGardenSprites()]).then(([image, loadedSprites]) => {
+      if (failed) return;
+      yearsBackground = image; sprites = loadedSprites;
+      requestMeasure();
+    }).catch(disableJourney);
   }
   new IntersectionObserver(entries => {
     active = entries[0].isIntersecting;

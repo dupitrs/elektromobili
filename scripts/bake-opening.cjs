@@ -34,7 +34,7 @@ async function renderOpening() {
   const a = section.querySelector(".exp-intro").getBoundingClientRect();
   const b = section.querySelector(".exp-scene").getBoundingClientRect();
   const left = section.querySelector(".container").getBoundingClientRect().left;
-  const exitX = width >= 768 ? (a.right + b.left) / 2 : Math.max(12, left / 2);
+  const exitX = width >= 768 ? (a.right + b.left) / 2 : Math.max(unit * 3, left / 2);
   const plan = makeGardenBand({ index: 0, width, height, unit, entryX: width / 2, exitX });
   const canvas = document.createElement("canvas");
   drawGardenBand(canvas, plan, await loadGardenDecor(), 1);

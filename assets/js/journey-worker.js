@@ -1,5 +1,5 @@
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-2";
-import { loadGardenDecor, drawGardenBand } from "./journey-garden-renderer.js?v=20260927-mobile-2";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-3";
+import { loadGardenDecor, drawGardenBand } from "./journey-garden-renderer.js?v=20260927-mobile-3";
 
 // Geometry and rasterization both stay off the scrolling thread. Keep only the
 // newest requested layout for each band when resizing or changing language.

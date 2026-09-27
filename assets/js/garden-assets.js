@@ -29,12 +29,12 @@ const compact = typeof innerWidth === "number" && Math.min(innerWidth, innerHeig
 let sprites, yearsBackground;
 export function loadYearsBackground() {
   const file = compact ? "background-mobile.webp" : "background.webp";
-  return yearsBackground ||= decodeImage(new URL("../img/years/" + file + "?v=20260927-mobile-2", import.meta.url).href);
+  return yearsBackground ||= decodeImage(new URL("../img/years/" + file + "?v=20260927-mobile-3", import.meta.url).href);
 }
 
 export function loadGardenSprites() {
   if (!sprites) {
-    const asset = name => new URL("../img/years/" + name + "?v=20260927-mobile-2", import.meta.url).href;
+    const asset = name => new URL("../img/years/" + name + "?v=20260927-mobile-3", import.meta.url).href;
     const variant = (stem, extension) => asset(stem + (compact ? "-mobile" : "") + extension);
     sprites = Promise.all([
       decodeSprite(variant("car", ".webp")), decodeSprite(variant("trailer", ".webp")),
