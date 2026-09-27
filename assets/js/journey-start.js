@@ -3,7 +3,7 @@
 export const gardenPainter = { worker: null, error: null };
 try {
   if (window.Worker && HTMLCanvasElement.prototype.transferControlToOffscreen) {
-    gardenPainter.worker = new Worker(new URL("./journey-worker.js?v=20260917-first-garden-1", import.meta.url), { type: "module" });
+    gardenPainter.worker = new Worker(new URL("./journey-worker.js?v=20260927-mobile-1", import.meta.url), { type: "module" });
     gardenPainter.worker.onerror = event => {
       event.preventDefault();
       gardenPainter.error = new Error(event.message);

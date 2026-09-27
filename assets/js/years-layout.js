@@ -1,4 +1,5 @@
-import { yearsJoinAvenues, yearsRoadWidth } from "./years-routes.js?v=20260917-side-fountains-1";
+import { yearsJoinAvenues, yearsRoadWidth } from "./years-routes.js?v=20260927-mobile-1";
+import { viewportHeight } from "./viewport.js?v=20260927-mobile-1";
 
 const projection = 43 / Math.hypot(43, 36);
 
@@ -52,10 +53,10 @@ export function yearsJoinPlacement(bandHeight, { edge, apron, roadHeight, stageH
 export function layoutYears(section) {
   const stage = section.querySelector(".years-stage");
   const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 80;
-  const height = Math.max(180, innerHeight - headerHeight);
+  const height = Math.max(180, viewportHeight() - headerHeight);
   stage.style.height = height + "px";
   const top = headerHeight;
-  const distance = innerWidth < 620 ? Math.max(420, Math.min(620, innerHeight * .7)) : Math.max(680, Math.min(900, innerHeight * .85));
+  const distance = innerWidth < 620 ? Math.max(420, Math.min(620, viewportHeight() * .7)) : Math.max(680, Math.min(900, viewportHeight() * .85));
   section.style.setProperty("--years-pin-height", height + "px");
   section.style.setProperty("--years-pin-top", top + "px");
   section.style.setProperty("--years-scroll-distance", distance + "px");

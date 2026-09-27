@@ -16,17 +16,29 @@ async function decodeSprite(url) {
   catch { return picture; }
 }
 
+/* Phones hold these three images in memory decoded, not compressed: the full
+   garden and both sprite atlases come to 82 MB that way, which is what makes
+   Safari and the Instagram browser stutter and reload the page. Half-scale
+   copies cost 21 MB and are still sharper than the screen: the cars are drawn
+   about 55 px wide on a phone, from tiles that remain 128 px. The worker gets
+   the background URL from the page, so both stay on the same copy. */
+// The short edge, so a phone turned sideways is still a phone and a tablet
+// still gets the full-resolution garden.
+const compact = typeof innerWidth === "number" && Math.min(innerWidth, innerHeight) < 700;
+
 let sprites, yearsBackground;
 export function loadYearsBackground() {
-  return yearsBackground ||= decodeImage(new URL("../img/years/background.webp?v=20260917-side-fountains-1", import.meta.url).href);
+  const file = compact ? "background-mobile.webp" : "background.webp";
+  return yearsBackground ||= decodeImage(new URL("../img/years/" + file + "?v=20260927-mobile-1", import.meta.url).href);
 }
 
 export function loadGardenSprites() {
   if (!sprites) {
-    const asset = name => new URL("../img/years/" + name + "?v=20260917-side-fountains-1", import.meta.url).href;
+    const asset = name => new URL("../img/years/" + name + "?v=20260927-mobile-1", import.meta.url).href;
+    const variant = (stem, extension) => asset(stem + (compact ? "-mobile" : "") + extension);
     sprites = Promise.all([
-      decodeSprite(asset("car.webp")), decodeSprite(asset("trailer.webp")),
-      fetch(asset("frames.json")).then(response => {
+      decodeSprite(variant("car", ".webp")), decodeSprite(variant("trailer", ".webp")),
+      fetch(variant("frames", ".json")).then(response => {
         if (!response.ok) throw new Error("Garden frames unavailable");
         return response.json();
       })

@@ -1,9 +1,10 @@
-import { scroll } from "./smooth-scroll.js?v=20260917-side-fountains-1";
-import { gardenPainter } from "./journey-start.js?v=20260917-first-garden-1";
-import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260917-side-fountains-1";
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260917-loading-1";
-import { createVisitWeather } from "./visit-weather.js?v=20260917-warning-2";
-import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260917-side-fountains-1";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-1";
+import { gardenPainter } from "./journey-start.js?v=20260927-mobile-1";
+import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-1";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-1";
+import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-1";
+import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-1";
+import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-1";
 
 const motion = matchMedia("(prefers-reduced-motion: reduce)");
 const K = 43 / Math.hypot(43, 36), ELEVATION = 36 / Math.hypot(43, 36);
@@ -230,7 +231,7 @@ function setupJourney() {
     layoutFrame = 0;
     if (failed || !root.classList.contains("journey-on")) return;
     header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 80;
-    width = root.clientWidth; height = innerHeight - header;
+    width = root.clientWidth; height = viewportHeight() - header;
     unit = Math.max(8, Math.min(16, width / 96));
     root.style.setProperty("--journey-unit", unit + "px");
     root.style.setProperty("--journey-height", height + "px");
@@ -258,7 +259,7 @@ function setupJourney() {
     }
     rootTop = root.getBoundingClientRect().top + scrollY;
     rootBottom = rootTop + root.getBoundingClientRect().height;
-    maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    maxScroll = Math.max(0, document.documentElement.scrollHeight - viewportHeight());
     points = []; routeLength = 0;
     for (const band of bands) {
       band.top = band.element.getBoundingClientRect().top + scrollY;
@@ -380,7 +381,7 @@ function setupJourney() {
   const observer = new ResizeObserver(requestMeasure);
   for (const stop of stops) observer.observe(stop.section);
   scroll.on("scroll", requestDraw);
-  window.addEventListener("resize", requestMeasure, { passive: true });
+  onViewportChange(requestMeasure);
   document.addEventListener("erm:langchange", requestMeasure);
   document.addEventListener("visibilitychange", () => document.hidden ? cancelDraw() : requestDraw());
   document.fonts.ready.then(requestMeasure);

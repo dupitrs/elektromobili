@@ -86,9 +86,9 @@
   background-repeat: no-repeat;
   opacity: 0;
   pointer-events: none;
-  will-change: transform;
 }
 .has-weather-cloud .wx-layer { opacity: 1; }
+.is-weather-active .wx-layer { will-change: transform; }
 /* Blurred, slightly larger copy behind everything: the vapor the lobes float in. */
 .wx-haze { filter: blur(5px); opacity: 0; animation: wx-haze 25s -7s ease-in-out infinite; }
 .has-weather-cloud .wx-haze { opacity: .24; }
@@ -130,9 +130,9 @@
    origin (--fx/--fy) and screened over the cloud. JS drives only their opacity. */
 .wx-lit {
   mix-blend-mode: screen;
-  will-change: opacity;
 }
 .has-weather-cloud .wx-lit { opacity: 0; }
+.is-weather-active :is(.wx-lit, .wx-ambient) { will-change: opacity; }
 .wx-lit-a {
   filter: brightness(1.9) contrast(1.2) sepia(.2);
   -webkit-mask-image: radial-gradient(ellipse 30% 26% at var(--fx, 50%) var(--fy, 45%), #000, rgba(0,0,0,.55) 45%, transparent 100%);
@@ -151,7 +151,6 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0;
-  will-change: opacity;
   background: radial-gradient(circle at var(--ax, 50%) var(--ay, 30%), rgba(236, 240, 255, .06), rgba(236, 240, 255, .03) 140px, transparent 300px);
 }
 .weather-rain {

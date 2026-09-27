@@ -1,7 +1,8 @@
-import { gardenRoutes } from "./years-routes.js?v=20260917-side-fountains-1";
-import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260917-side-fountains-1";
-import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260917-side-fountains-1";
-import { scroll } from "./smooth-scroll.js?v=20260917-side-fountains-1";
+import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-1";
+import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-1";
+import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-1";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-1";
+import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-1";
 
 /* The camera never moves. Pre-rendered views of the original 3D models keep
    their detail without rebuilding geometry or shadows while the page scrolls. */
@@ -37,7 +38,7 @@ export async function createGarden(section) {
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
   let width = 0, height = 0, scale = 1, centerX = 0, centerZ = 3, sectionTop = 0;
   let pinTop = 84, scrollDistance = 900, elapsed = -1, raf = 0, active = true;
-  let pixelRatio = 1, colorReturn = 0;
+  let pixelRatio = 1, colorReturn = 0, paintedBackdrop = "", paintedEmphasis = "";
 
   function project(x, y, z) {
     return {
@@ -60,9 +61,15 @@ export async function createGarden(section) {
     }
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     const backdrop = yearsBackgroundPlacement(width, height, frames);
-    stage.style.backgroundImage = 'url("' + background.src + '")';
-    stage.style.backgroundSize = backdrop.width + "px " + backdrop.height + "px";
-    stage.style.backgroundPosition = backdrop.x + "px " + backdrop.y + "px";
+    // Re-assigning the same background can send the browser back to the
+    // decoder for a 1600 px wide garden, which a phone feels as a stall.
+    const placement = [background.src, backdrop.width, backdrop.height, backdrop.x, backdrop.y].join();
+    if (placement !== paintedBackdrop) {
+      paintedBackdrop = placement;
+      stage.style.backgroundImage = 'url("' + background.src + '")';
+      stage.style.backgroundSize = backdrop.width + "px " + backdrop.height + "px";
+      stage.style.backgroundPosition = backdrop.x + "px " + backdrop.y + "px";
+    }
 
     // Start each queue just outside the current crop, on its existing road.
     const starts = new Map(), margin = 2.6 * scale;
@@ -115,9 +122,14 @@ export async function createGarden(section) {
   function draw() {
     section.classList.toggle("is-formed", elapsed >= RUN_TIME);
     section.classList.toggle("is-plus-visible", elapsed >= RUN_TIME * .5);
-    const emphasis = smooth((elapsed / RUN_TIME - .15) / .85) * (1 - colorReturn);
-    section.style.setProperty("--years-emphasis", emphasis.toFixed(4));
-    for (const band of adjoiningBands) band.style.setProperty("--years-emphasis", emphasis.toFixed(4));
+    // Writing this custom property invalidates the whole section's styles,
+    // so only a value the eye can tell apart is worth a frame of that work.
+    const emphasis = (smooth((elapsed / RUN_TIME - .15) / .85) * (1 - colorReturn)).toFixed(3);
+    if (emphasis !== paintedEmphasis) {
+      paintedEmphasis = emphasis;
+      section.style.setProperty("--years-emphasis", emphasis);
+      for (const band of adjoiningBands) band.style.setProperty("--years-emphasis", emphasis);
+    }
     context.clearRect(0, 0, width, height);
     const leaders = new Map();
     context.strokeStyle = "#242725";
@@ -163,7 +175,7 @@ export async function createGarden(section) {
 
   function updateScrollProgress() {
     const before = elapsed, previousReturn = colorReturn;
-    const lead = Math.min(180, innerHeight * .2);
+    const lead = Math.min(180, viewportHeight() * .2);
     const offset = scrollY - sectionTop + pinTop;
     elapsed = motionPreference.matches ? RUN_TIME :
       clamp((offset + lead) / (scrollDistance * FORMATION_END + lead), 0, 1) * RUN_TIME;
@@ -189,7 +201,7 @@ export async function createGarden(section) {
     }, { rootMargin: "120px" }).observe(section);
   new ResizeObserver(resize).observe(pin);
   scroll.on("scroll", onScroll);
-  window.addEventListener("resize", resize, { passive: true });
+  onViewportChange(resize);
   document.addEventListener("visibilitychange", () => document.hidden ? stop() : onScroll());
   document.addEventListener("erm:langchange", () => requestAnimationFrame(resize));
   document.addEventListener("erm:journeylayout", resize);
