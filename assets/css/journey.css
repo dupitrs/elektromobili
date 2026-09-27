@@ -1,0 +1,119 @@
+/* Ordinary full-width sections, joined by short garden paths. */
+.journey-band, .journey-guide { display: none; }
+.journey-chapter { position: relative; }
+.journey-on {
+  --journey-unit: clamp(8px, 1.041667vw, 16px);
+  --journey-height: calc(100svh - var(--header-h));
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.journey-on .journey-band {
+  display: block;
+  position: relative;
+  height: calc(var(--journey-unit) * 21.467);
+  overflow: clip;
+  background: var(--surface);
+}
+.journey-on .journey-band.fade-top,
+.journey-on .journey-band.fade-bottom,
+.journey-opening.fade-bottom { --journey-fade-edge: clamp(24px, 3.5vw, 56px); }
+.journey-on .journey-band.fade-top {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--journey-fade-edge), #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--journey-fade-edge), #000 100%);
+}
+.journey-on .journey-band.fade-bottom,
+.journey-opening.fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - var(--journey-fade-edge)), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - var(--journey-fade-edge)), transparent 100%);
+}
+.journey-on .journey-band.fade-top.fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--journey-fade-edge), #000 calc(100% - var(--journey-fade-edge)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--journey-fade-edge), #000 calc(100% - var(--journey-fade-edge)), transparent 100%);
+}
+.journey-on .journey-band-end { height: calc(var(--journey-unit) * 26.834 + max(0px, 10vw - 76.8px)); }
+.journey-band canvas { display: block; width: 100%; height: 100%; }
+/* A pre-rendered opening is available before JS; the exact worker canvas
+   takes its place without waiting for the remaining gardens or train atlases. */
+.journey-band.journey-opening {
+  display: block;
+  position: relative;
+  overflow: clip;
+  height: calc(clamp(8px, 1.041667vw, 16px) * 35.271);
+}
+.journey-opening-preview { position: absolute; inset: 0; }
+.journey-opening-preview img { display: block; width: 100%; height: 100%; }
+.journey-opening canvas { position: relative; }
+/* Keep the preview underneath: a worker's reply can arrive before its
+   OffscreenCanvas pixels reach the compositor. The opaque canvas covers it. */
+.garden-journey:not(.journey-on) .journey-opening { display: none; }
+@media (max-width: 767px) {
+  .journey-band.journey-opening { height: max(282.17px, calc(98.15px + (50vw - 12px) * .669643)); }
+}
+.journey-band.years-join::after { content: ""; position: absolute; inset: 0; background: #bbc9a3; opacity: calc(var(--years-emphasis, 0) * .9); pointer-events: none; }
+.journey-on .journey-stop {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--surface);
+  scroll-margin-top: var(--header-h);
+}
+.journey-on .years { background: var(--years-ground); }
+.journey-chapters { position: relative; }
+.journey-guide canvas { position: absolute; top: 0; left: 0; max-width: none; }
+.journey-on .lang-list { column-gap: clamp(32px, 4.5vw, 64px); }
+@media (min-width: 768px) {
+  .journey-on .lang-head {
+    max-width: 940px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(32px, 4.5vw, 64px);
+    text-align: left;
+  }
+  .journey-on .lang-head > * { grid-column: 1; }
+  .journey-on .lang-head .lead { margin: 22px 0 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .journey-on.is-ready .journey-guide {
+    display: block;
+    position: sticky;
+    top: var(--header-h);
+    height: var(--journey-height);
+    margin-bottom: calc(-1 * var(--journey-height));
+    z-index: 3;
+    pointer-events: none;
+    overflow: clip;
+  }
+  .journey-on .lang-list li { --zip-x: calc(-1 * var(--language-spread, 10px)); }
+  .journey-on .lang-list li:nth-child(even) { --zip-x: var(--language-spread, 10px); }
+  .journey-on .zip-fallback li { opacity: 1; transition-duration: .35s; }
+  .journey-on .zip-fallback li:nth-child(even) { transition-delay: .04s; }
+  .journey-on .reveal { transition-duration: .38s; transition-delay: 0s; }
+  .journey-on.is-ready .lang-list li {
+    --zip-side: 1;
+    --zip-close: calc((clamp(32px, 4.5vw, 64px) - 12px) / 2);
+    --zip-lift: 24px;
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform-origin: 0% 50%;
+    transform:
+      translate(calc(var(--zip-x) * var(--zip-open, 0) + var(--zip-side) * var(--zip-close) * (1 - var(--zip-open, 0))), calc(var(--zip-lift) * var(--zip-open, 0)))
+      scale(calc(1 - .07 * var(--zip-open, 0)));
+  }
+  .journey-on.is-ready .lang-list li:nth-child(even) {
+    --zip-side: -1;
+    transform-origin: 100% 50%;
+  }
+}
+@media (max-width: 767px) {
+  .journey-on.is-ready .lang-list li { --zip-lift: 18px; }
+  .journey-on .lang-head { margin-bottom: var(--language-turn-space, 196px); }
+}
+@media print {
+  .journey-band, .journey-guide { display: none !important; }
+  .journey-on .lang-list li { animation: none !important; transform: none !important; }
+}

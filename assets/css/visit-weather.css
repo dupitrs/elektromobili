@@ -1,0 +1,248 @@
+/* The weather sits in reserved whitespace, never over the practical details.
+   The cloud is one photo stacked several times: each copy is softly masked to
+   a lobe and breathes on its own clock, so the silhouette never sits still. */
+.visit-weather .visit-note {
+  position: relative;
+  display: block;
+  padding: 156px 70px 28px 28px;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  overflow: visible;
+  animation: wx-card-pulse 2.4s ease-in-out infinite paused;
+}
+.visit-weather .visit-note h3 { margin-bottom: 12px; }
+.visit-weather .rain-scene {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.weather-cloud {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  opacity: 0;
+}
+.has-weather-cloud .weather-cloud {
+  opacity: 1;
+  filter: contrast(calc(1 + var(--wx-flash, 0) * .28)) brightness(calc(1 + var(--wx-flash, 0) * .12));
+  animation: wx-drift 19s -3s ease-in-out infinite;
+}
+.visit-weather .rain-cloud { position: absolute; top: 68px; left: 42%; }
+.visit-weather .rain-cloud[hidden] { display: none; }
+.has-weather-cloud .rain-cloud { display: none; }
+.weather-warning { display: none; }
+.visit-weather .weather-warning {
+  position: absolute;
+  z-index: 5;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--brand);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--brand);
+  font: 800 28px/1 var(--sans);
+  box-shadow: 0 3px 12px rgb(150 47 37 / .12);
+  animation: wx-warning-pulse 2.4s ease-in-out infinite paused;
+}
+.weather-warning::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid currentColor;
+  border-radius: inherit;
+  opacity: 0;
+  animation: wx-warning-ring 2.4s ease-out infinite paused;
+}
+.visit-note.is-weather-active,
+.visit-note.is-weather-active .weather-warning,
+.visit-note.is-weather-active .weather-warning::after { animation-play-state: running; }
+@keyframes wx-card-pulse {
+  0%, 45%, 100% { background-color: var(--paper); border-color: var(--line); }
+  18% { background-color: #f4d0ca; border-color: #d8877b; }
+  30% { background-color: #f8e2dd; border-color: #e2aaa1; }
+}
+@keyframes wx-warning-pulse {
+  0%, 45%, 100% { transform: scale(1); }
+  18% { transform: scale(1.12) rotate(-5deg); }
+  30% { transform: scale(1.06) rotate(4deg); }
+}
+@keyframes wx-warning-ring {
+  0% { transform: scale(1); opacity: .5; }
+  55%, 100% { transform: scale(1.65); opacity: 0; }
+}
+.wx-layer {
+  position: absolute;
+  inset: 0;
+  background-image: var(--wx-img);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.has-weather-cloud .wx-layer { opacity: 1; }
+/* Blurred, slightly larger copy behind everything: the vapor the lobes float in. */
+.wx-haze { filter: blur(5px); opacity: 0; animation: wx-haze 25s -7s ease-in-out infinite; }
+.has-weather-cloud .wx-haze { opacity: .24; }
+/* Underside darkening pulse, as if a denser cell drifts through the base. */
+.wx-shade {
+  filter: brightness(.72) saturate(.85);
+  -webkit-mask-image: linear-gradient(transparent 42%, #000 70%);
+  mask-image: linear-gradient(transparent 42%, #000 70%);
+  animation: wx-shade 14s -6s ease-in-out infinite;
+}
+.has-weather-cloud .wx-shade { opacity: .05; }
+.wx-lobe-l {
+  transform-origin: 27% 58%;
+  -webkit-mask-image: radial-gradient(ellipse 30% 40% at 27% 58%, rgba(0,0,0,.85), rgba(0,0,0,.6) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 30% 40% at 27% 58%, rgba(0,0,0,.85), rgba(0,0,0,.6) 45%, transparent 100%);
+  animation: wx-lobe-l 13s -2s ease-in-out infinite;
+}
+.wx-lobe-c {
+  transform-origin: 53% 38%;
+  -webkit-mask-image: radial-gradient(ellipse 27% 32% at 53% 38%, rgba(0,0,0,.85), rgba(0,0,0,.55) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 27% 32% at 53% 38%, rgba(0,0,0,.85), rgba(0,0,0,.55) 45%, transparent 100%);
+  animation: wx-lobe-c 9.5s -5s ease-in-out infinite;
+}
+.wx-lobe-r {
+  transform-origin: 76% 52%;
+  -webkit-mask-image: radial-gradient(ellipse 28% 38% at 76% 52%, rgba(0,0,0,.85), rgba(0,0,0,.6) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 28% 38% at 76% 52%, rgba(0,0,0,.85), rgba(0,0,0,.6) 45%, transparent 100%);
+  animation: wx-lobe-r 16.5s -9s ease-in-out infinite;
+}
+/* Front wisps: the ragged bottom fringe, softened and sliding sideways. */
+.wx-wisps {
+  filter: blur(1px);
+  -webkit-mask-image: linear-gradient(transparent 50%, #000 74%);
+  mask-image: linear-gradient(transparent 50%, #000 74%);
+  animation: wx-wisps 21s -4s ease-in-out infinite alternate;
+}
+.has-weather-cloud .wx-wisps { opacity: .45; }
+/* Lit-from-inside copies: the same photo brightened, masked around the flash
+   origin (--fx/--fy) and screened over the cloud. JS drives only their opacity. */
+.wx-lit {
+  mix-blend-mode: screen;
+  will-change: opacity;
+}
+.has-weather-cloud .wx-lit { opacity: 0; }
+.wx-lit-a {
+  filter: brightness(1.9) contrast(1.2) sepia(.2);
+  -webkit-mask-image: radial-gradient(ellipse 30% 26% at var(--fx, 50%) var(--fy, 45%), #000, rgba(0,0,0,.55) 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 30% 26% at var(--fx, 50%) var(--fy, 45%), #000, rgba(0,0,0,.55) 45%, transparent 100%);
+}
+.wx-lit-b {
+  filter: brightness(2.3) contrast(1.2) sepia(.3) hue-rotate(185deg) saturate(1.2);
+  -webkit-mask-image: radial-gradient(ellipse 48% 40% at var(--fx, 50%) var(--fy, 70%), rgba(0,0,0,.9), rgba(0,0,0,.4) 50%, rgba(0,0,0,.12) 100%);
+  mask-image: radial-gradient(ellipse 48% 40% at var(--fx, 50%) var(--fy, 70%), rgba(0,0,0,.9), rgba(0,0,0,.4) 50%, rgba(0,0,0,.12) 100%);
+}
+.wx-bolt { position: absolute; left: -30px; top: 0; max-width: none; pointer-events: none; }
+/* Soft light lift on the card and the strip beside it; alpha never exceeds 6 %. */
+.visit-weather .visit-note :is(h3, p) { position: relative; z-index: 2; }
+.wx-ambient {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  background: radial-gradient(circle at var(--ax, 50%) var(--ay, 30%), rgba(236, 240, 255, .06), rgba(236, 240, 255, .03) 140px, transparent 300px);
+}
+.weather-rain {
+  position: absolute;
+  width: 54px;
+  height: 72px;
+  overflow: hidden;
+  opacity: .9;
+  /* Falling drops catch the flash: brighter for the same instant as the cloud. */
+  filter: brightness(calc(1 + var(--wx-flash, 0) * .9));
+  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent);
+  mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent);
+}
+.weather-rain i {
+  position: absolute;
+  top: -24px;
+  left: var(--drop-x);
+  width: 1px;
+  height: var(--drop-h, 16px);
+  background: linear-gradient(transparent, #798b95);
+  opacity: var(--drop-opacity);
+  animation: visit-rain-fall var(--drop-time) var(--drop-delay) linear infinite;
+}
+/* A faint swaying rain shaft under the darkest part of the base. */
+.wx-shaft {
+  position: absolute;
+  inset: -8px -24px;
+  opacity: .22;
+  background: repeating-linear-gradient(97deg, transparent 0 5px, rgba(121, 139, 149, .35) 5px 6px, transparent 6px 10px);
+  animation: wx-shaft 4.3s ease-in-out infinite alternate;
+}
+.weather-rain i, .wx-layer, .weather-cloud, .wx-shaft { animation-play-state: paused; }
+.is-weather-active :is(.weather-rain i, .wx-layer, .weather-cloud, .wx-shaft) { animation-play-state: running; }
+.weather-cloud-unavailable :is(.weather-rain, .wx-layer, .wx-bolt) { display: none; }
+.weather-wheelmarks {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: inset(0 0 100% 0);
+}
+.weather-wheelmarks canvas { display: block; max-width: none; }
+@keyframes visit-rain-fall {
+  from { transform: translate3d(4px, 0, 0) rotate(8deg); }
+  to { transform: translate3d(-7px, 100px, 0) rotate(8deg); }
+}
+@keyframes wx-shaft { from { transform: translate3d(-5px, 0, 0); } to { transform: translate3d(5px, 0, 0); } }
+@keyframes wx-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(3px, -1.5px, 0); }
+  75% { transform: translate3d(-2px, 1px, 0); }
+}
+@keyframes wx-haze {
+  0%, 100% { transform: translate3d(-3px, 1px, 0) scale(1.04); opacity: .24; }
+  50% { transform: translate3d(4px, -2px, 0) scale(1.07); opacity: .34; }
+}
+@keyframes wx-lobe-l {
+  0%, 100% { transform: none; }
+  38% { transform: translate3d(-2.5px, 1.5px, 0) scale(1.024); }
+  72% { transform: translate3d(1px, -1px, 0) scale(1.01); }
+}
+@keyframes wx-lobe-c {
+  0%, 100% { transform: none; }
+  45% { transform: translate3d(1px, -3px, 0) scale(1.03); }
+}
+@keyframes wx-lobe-r {
+  0%, 100% { transform: none; }
+  30% { transform: translate3d(2px, 1px, 0) scale(1.018); }
+  65% { transform: translate3d(3px, -2px, 0) scale(1.028); }
+}
+@keyframes wx-wisps {
+  from { transform: translate3d(-3px, 0, 0) scale(1.01); }
+  to { transform: translate3d(3px, 1px, 0) scale(1.03); }
+}
+@keyframes wx-shade {
+  0%, 100% { opacity: .05; }
+  50% { opacity: .4; }
+}
+@media (max-width: 1023px) {
+  .visit-weather .visit-note { padding-left: 24px; padding-right: 64px; }
+}
+@media (max-width: 767px) {
+  .visit-weather .visit-note { padding: 150px 70px 26px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .visit-weather .visit-note, .visit-weather .weather-warning, .weather-warning::after { animation: none; }
+  .weather-rain i, .wx-layer, .weather-cloud, .wx-shaft { animation: none; }
+  .wx-lit, .wx-ambient, .wx-bolt { display: none; }
+  .weather-wheelmarks { display: none; }
+}
+@media print {
+  .visit-weather .visit-note, .visit-weather .weather-warning, .weather-warning::after { animation: none; }
+  .weather-rain, .weather-wheelmarks, .wx-layer, .wx-bolt, .wx-ambient { display: none; }
+}

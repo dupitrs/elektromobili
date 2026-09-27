@@ -16,3 +16,9 @@ node_modules/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Playwright MCP captures
+.playwright-mcp/
+
+# Loose original download kept locally
+assets/img/large_39180851099aac34c82

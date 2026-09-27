@@ -28,11 +28,11 @@
   var DICT = {
     "en": {
           "a11y.skip": "Skip to content",
-          "nav.experience": "Experience",
-          "nav.included": "Included",
+          "nav.experience": "About the ride",
+          "nav.included": "What's included",
           "nav.languages": "Languages",
           "nav.gallery": "Gallery",
-          "nav.visit": "Visit",
+          "nav.visit": "Visit information",
           "nav.contact": "Contact",
           "hero.eyebrow": "May – October · Rundāle Palace Garden",
           "hero.title": "Aristocratic leisure in the Rundāle Palace garden",
@@ -110,11 +110,11 @@
     },
     "et": {
           "a11y.skip": "Liigu sisu juurde",
-          "nav.experience": "Elamus",
-          "nav.included": "Sisaldub",
+          "nav.experience": "Sõidust",
+          "nav.included": "Mis sisaldub",
           "nav.languages": "Keeled",
           "nav.gallery": "Galerii",
-          "nav.visit": "Külasta",
+          "nav.visit": "Külastusinfo",
           "nav.contact": "Kontakt",
           "hero.eyebrow": "Mai – oktoober · Rundāle lossi aed",
           "hero.title": "Aristokraatlik puhkus Rundāle lossi aias",
@@ -192,11 +192,11 @@
     },
     "es": {
           "a11y.skip": "Saltar al contenido",
-          "nav.experience": "Experiencia",
-          "nav.included": "Incluido",
+          "nav.experience": "El recorrido",
+          "nav.included": "Qué incluye",
           "nav.languages": "Idiomas",
           "nav.gallery": "Galería",
-          "nav.visit": "Visita",
+          "nav.visit": "Información de visita",
           "nav.contact": "Contacto",
           "hero.eyebrow": "Mayo – Octubre · Jardín del Palacio de Rundāle",
           "hero.title": "Ocio aristocrático en el jardín del Palacio de Rundāle",
@@ -274,11 +274,11 @@
     },
     "lt": {
           "a11y.skip": "Pereiti prie turinio",
-          "nav.experience": "Patirtis",
+          "nav.experience": "Apie kelionę",
           "nav.included": "Kas įskaičiuota",
           "nav.languages": "Kalbos",
           "nav.gallery": "Galerija",
-          "nav.visit": "Apsilankymas",
+          "nav.visit": "Informacija lankytojams",
           "nav.contact": "Kontaktai",
           "hero.eyebrow": "Gegužė – spalis · Rundāle rūmų sodas",
           "hero.title": "Aristokratiškas poilsis Rundāle rūmų sode",
@@ -356,11 +356,11 @@
     },
     "fr": {
           "a11y.skip": "Aller au contenu",
-          "nav.experience": "L'expérience",
-          "nav.included": "Inclus",
+          "nav.experience": "La balade",
+          "nav.included": "Ce qui est inclus",
           "nav.languages": "Langues",
           "nav.gallery": "Galerie",
-          "nav.visit": "Visite",
+          "nav.visit": "Informations de visite",
           "nav.contact": "Contact",
           "hero.eyebrow": "Mai – octobre · Jardin du château de Rundāle",
           "hero.title": "Loisir aristocratique dans le jardin du château de Rundāle",
@@ -438,11 +438,11 @@
     },
     "it": {
           "a11y.skip": "Vai al contenuto",
-          "nav.experience": "Esperienza",
-          "nav.included": "Incluso",
+          "nav.experience": "Il giro",
+          "nav.included": "Cosa include",
           "nav.languages": "Lingue",
           "nav.gallery": "Galleria",
-          "nav.visit": "Visita",
+          "nav.visit": "Informazioni per la visita",
           "nav.contact": "Contatti",
           "hero.eyebrow": "Maggio – Ottobre · Giardino del Palazzo di Rundāle",
           "hero.title": "Ozio aristocratico nel giardino del Palazzo di Rundāle",
@@ -520,11 +520,11 @@
     },
     "ko": {
           "a11y.skip": "본문으로 건너뛰기",
-          "nav.experience": "체험",
+          "nav.experience": "탑승 안내",
           "nav.included": "포함 사항",
           "nav.languages": "언어",
           "nav.gallery": "갤러리",
-          "nav.visit": "방문 안내",
+          "nav.visit": "방문 정보",
           "nav.contact": "문의",
           "hero.eyebrow": "5월 – 10월 · 룬달레 궁전 정원",
           "hero.title": "룬달레 궁전 정원에서 즐기는 귀족의 여유",
@@ -602,11 +602,11 @@
     },
     "de": {
           "a11y.skip": "Zum Inhalt springen",
-          "nav.experience": "Erlebnis",
-          "nav.included": "Inklusive",
+          "nav.experience": "Die Fahrt",
+          "nav.included": "Inbegriffen",
           "nav.languages": "Sprachen",
           "nav.gallery": "Galerie",
-          "nav.visit": "Besuch",
+          "nav.visit": "Besuchsinformationen",
           "nav.contact": "Kontakt",
           "hero.eyebrow": "Mai – Oktober · Garten von Schloss Rundāle",
           "hero.title": "Aristokratische Muße im Garten von Schloss Rundāle",
@@ -684,11 +684,11 @@
     },
     "ja": {
           "a11y.skip": "本文へスキップ",
-          "nav.experience": "体験",
-          "nav.included": "含まれるもの",
+          "nav.experience": "乗車について",
+          "nav.included": "含まれる内容",
           "nav.languages": "対応言語",
           "nav.gallery": "ギャラリー",
-          "nav.visit": "訪問案内",
+          "nav.visit": "来園案内",
           "nav.contact": "お問い合わせ",
           "hero.eyebrow": "5月～10月 · ルンダーレ宮殿庭園",
           "hero.title": "ルンダーレ宮殿の庭園で味わう、貴族のようなひととき",
@@ -766,11 +766,11 @@
     },
     "el": {
           "a11y.skip": "Μετάβαση στο περιεχόμενο",
-          "nav.experience": "Εμπειρία",
+          "nav.experience": "Η διαδρομή",
           "nav.included": "Τι περιλαμβάνεται",
           "nav.languages": "Γλώσσες",
           "nav.gallery": "Συλλογή",
-          "nav.visit": "Επίσκεψη",
+          "nav.visit": "Πληροφορίες επίσκεψης",
           "nav.contact": "Επικοινωνία",
           "hero.eyebrow": "Μάιος – Οκτώβριος · Κήπος του Ανακτόρου Rundāle",
           "hero.title": "Αριστοκρατική αναψυχή στον κήπο του Ανακτόρου Rundāle",
@@ -848,11 +848,11 @@
     },
     "fi": {
           "a11y.skip": "Siirry sisältöön",
-          "nav.experience": "Elämys",
-          "nav.included": "Sisältyy",
+          "nav.experience": "Ajomatka",
+          "nav.included": "Mitä sisältyy",
           "nav.languages": "Kielet",
           "nav.gallery": "Galleria",
-          "nav.visit": "Vieraile",
+          "nav.visit": "Vierailutiedot",
           "nav.contact": "Yhteystiedot",
           "hero.eyebrow": "Toukokuu – lokakuu · Rundālen palatsin puutarha",
           "hero.title": "Aristokraattista huvia Rundālen palatsin puutarhassa",
@@ -930,11 +930,11 @@
     },
     "ru": {
           "a11y.skip": "Перейти к содержанию",
-          "nav.experience": "Впечатление",
+          "nav.experience": "О поездке",
           "nav.included": "Что включено",
           "nav.languages": "Языки",
           "nav.gallery": "Галерея",
-          "nav.visit": "Визит",
+          "nav.visit": "Информация для посетителей",
           "nav.contact": "Контакты",
           "hero.eyebrow": "Май – октябрь · Сад Рундальского дворца",
           "hero.title": "Аристократический отдых в саду Рундальского дворца",
@@ -1012,11 +1012,11 @@
     },
     "pl": {
           "a11y.skip": "Przejdź do treści",
-          "nav.experience": "Przeżycie",
-          "nav.included": "W cenie",
+          "nav.experience": "O przejażdżce",
+          "nav.included": "Co obejmuje",
           "nav.languages": "Języki",
           "nav.gallery": "Galeria",
-          "nav.visit": "Wizyta",
+          "nav.visit": "Informacje dla odwiedzających",
           "nav.contact": "Kontakt",
           "hero.eyebrow": "Maj – październik · Ogród Pałacu Rundāle",
           "hero.title": "Arystokratyczny wypoczynek w ogrodzie Pałacu Rundāle",
@@ -1136,6 +1136,9 @@
     langMenu.hidden = false;
     langSwitch.classList.add("open");
     langBtn.setAttribute("aria-expanded", "true");
+    if (nav) closeNav();
+    var selected = langMenu.querySelector(".is-active") || langMenu.firstElementChild;
+    if (selected) selected.focus();
   }
   function closeMenu() {
     if (!langMenu) return;
@@ -1148,11 +1151,13 @@
     var m = metaFor(lang);
     var f = langBtn.querySelector(".lang-cur-flag");
     var c = langBtn.querySelector(".lang-cur-code");
-    if (f) f.src = "assets/img/flags/" + m.flag + ".svg";
+    if (f) f.src = "assets/img/flags/" + m.flag + ".webp";
     if (c) c.textContent = m.label;
+    langBtn.setAttribute("aria-label", "Valoda / Language: " + m.label);
     Object.keys(langMenuItems).forEach(function (code) {
       var active = code === lang;
       langMenuItems[code].classList.toggle("is-active", active);
+      langMenuItems[code].tabIndex = active ? 0 : -1;
       langMenuItems[code].setAttribute("aria-selected", active ? "true" : "false");
     });
   }
@@ -1164,12 +1169,14 @@
     langBtn.setAttribute("aria-haspopup", "listbox");
     langBtn.setAttribute("aria-expanded", "false");
     langBtn.setAttribute("aria-label", "Valoda / Language");
+    langBtn.setAttribute("aria-controls", "languageOptions");
     langBtn.innerHTML = '<img class="lang-cur-flag" alt="" width="22" height="16" />' +
       '<span class="lang-cur-code"></span>' +
       '<svg class="lang-caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
     langMenu = document.createElement("ul");
     langMenu.className = "lang-menu";
+    langMenu.id = "languageOptions";
     langMenu.setAttribute("role", "listbox");
     langMenu.setAttribute("aria-label", "Valoda / Language");
     langMenu.hidden = true;
@@ -1177,8 +1184,9 @@
     LANGS.forEach(function (L) {
       var li = document.createElement("li");
       li.setAttribute("role", "option");
+      li.tabIndex = -1;
       li.setAttribute("data-lang", L.code);
-      li.innerHTML = '<img src="assets/img/flags/' + L.flag + '.svg" alt="" width="22" height="16" />' +
+      li.innerHTML = '<img src="assets/img/flags/' + L.flag + '.webp" alt="" width="22" height="16" />' +
         '<span class="lang-menu-native">' + L.native + '</span>' +
         '<span class="lang-menu-code">' + L.label + '</span>';
       li.addEventListener("click", function () { applyLang(L.code); closeMenu(); langBtn.focus(); });
@@ -1188,6 +1196,33 @@
 
     langSwitch.appendChild(langBtn);
     langSwitch.appendChild(langMenu);
+    langBtn.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        openMenu();
+      }
+    });
+    langMenu.addEventListener("keydown", function (e) {
+      var items = Array.prototype.slice.call(langMenu.children);
+      var index = items.indexOf(document.activeElement);
+      var next = index;
+      if (e.key === "ArrowDown") next = (index + 1) % items.length;
+      else if (e.key === "ArrowUp") next = (index - 1 + items.length) % items.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = items.length - 1;
+      else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (index >= 0) items[index].click();
+        return;
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        closeMenu();
+        langBtn.focus();
+        return;
+      } else return;
+      e.preventDefault();
+      items[next].focus();
+    });
 
     langBtn.addEventListener("click", function (e) {
       e.stopPropagation();
@@ -1207,36 +1242,50 @@
   if (!isLang(savedLang)) savedLang = "lv";
   applyLang(savedLang);
 
-  /* ---------- Header scroll state ---------- */
+  /* ---------- Header over the opening video ---------- */
   var header = document.getElementById("siteHeader");
-  function onScroll() {
-    if (window.scrollY > 30) header.classList.add("scrolled");
-    else header.classList.remove("scrolled");
+  if ("IntersectionObserver" in window) {
+    header.classList.toggle("is-at-top", window.scrollY <= 30);
+    new IntersectionObserver(function (entries) {
+      header.classList.toggle("is-at-top", entries[0].isIntersecting);
+    }, { rootMargin: "30px 0px 0px 0px" }).observe(document.getElementById("top"));
   }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
   /* ---------- Mobile nav ---------- */
   var navToggle = document.getElementById("navToggle");
   var nav = document.getElementById("siteNav");
   function closeNav() {
+    header.classList.remove("menu-open");
     nav.classList.remove("open");
     navToggle.classList.remove("open");
     navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Atvērt izvēlni");
   }
   navToggle.addEventListener("click", function () {
+    closeMenu();
     var open = nav.classList.toggle("open");
+    header.classList.toggle("menu-open", open);
     navToggle.classList.toggle("open", open);
     navToggle.setAttribute("aria-expanded", open ? "true" : "false");
     navToggle.setAttribute("aria-label", open ? "Aizvērt izvēlni" : "Atvērt izvēlni");
   });
   nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeNav); });
-  window.addEventListener("resize", function () { if (window.innerWidth > 860) closeNav(); });
+  window.addEventListener("resize", function () { if (window.innerWidth >= 1200) closeNav(); });
+  document.addEventListener("click", function (e) {
+    if (!nav.contains(e.target) && !navToggle.contains(e.target)) closeNav();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("open")) {
+      closeNav();
+      navToggle.focus();
+    }
+  });
 
   /* ---------- Reveal on scroll ---------- */
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var revealEls = document.querySelectorAll(".reveal");
   if (!reduce && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("has-reveal");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
@@ -1247,8 +1296,26 @@
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
+  /* ---------- Zipper fallback for browsers without scroll timelines ---------- */
+  var languageList = document.querySelector(".lang-list");
+  if (languageList && !reduce && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      languageList.classList.toggle("zip-active", entries[0].isIntersecting);
+    }, { rootMargin: "120px" }).observe(languageList);
+  }
+  if (languageList && !reduce && "IntersectionObserver" in window &&
+      !(window.CSS && CSS.supports("animation-timeline", "view()"))) {
+    languageList.classList.add("zip-fallback");
+    var zipObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle("zip-in", entry.isIntersecting || entry.boundingClientRect.top < 0);
+      });
+    }, { threshold: 0, rootMargin: "0px 0px -18% 0px" });
+    languageList.querySelectorAll("li").forEach(function (item) { zipObserver.observe(item); });
+  }
+
   /* ---------- Active nav link ---------- */
-  var sections = ["pieredze", "ieklauts", "valodas", "galerija", "apmeklejums", "kontakti"]
+  var sections = ["pieredze", "ieklauts", "apmeklejums", "valodas", "galerija", "kontakti"]
     .map(function (id) { return document.getElementById(id); }).filter(Boolean);
   var navLinks = {};
   nav.querySelectorAll("a").forEach(function (a) {
@@ -1259,12 +1326,20 @@
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.remove("active"); });
-          if (navLinks[e.target.id]) navLinks[e.target.id].classList.add("active");
+          Object.keys(navLinks).forEach(function (k) {
+            navLinks[k].classList.remove("active");
+            navLinks[k].removeAttribute("aria-current");
+          });
+          if (navLinks[e.target.id]) {
+            navLinks[e.target.id].classList.add("active");
+            navLinks[e.target.id].setAttribute("aria-current", "location");
+          }
         }
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     sections.forEach(function (s) { spy.observe(s); });
+    var heroSection = document.querySelector(".hero");
+    if (heroSection) spy.observe(heroSection);
   }
 
   /* ---------- Lightbox ---------- */
@@ -1277,6 +1352,7 @@
   });
   var current = 0;
   var lastFocus = null;
+  var lbCloseTimer = null;
 
   function showSlide(i) {
     current = (i + slides.length) % slides.length;
@@ -1284,6 +1360,7 @@
     lbImg.alt = slides[current].alt;
   }
   function openLb(i) {
+    clearTimeout(lbCloseTimer);
     lastFocus = document.activeElement;
     showSlide(i);
     lb.hidden = false;
@@ -1294,7 +1371,7 @@
   function closeLb() {
     lb.classList.remove("open");
     document.body.style.overflow = "";
-    setTimeout(function () { lb.hidden = true; lbImg.src = ""; }, 280);
+    lbCloseTimer = setTimeout(function () { lb.hidden = true; lbImg.removeAttribute("src"); }, 280);
     if (lastFocus) lastFocus.focus();
   }
   galItems.forEach(function (b, i) { b.addEventListener("click", function () { openLb(i); }); });
@@ -1307,12 +1384,15 @@
     if (e.key === "Escape") closeLb();
     else if (e.key === "ArrowLeft") showSlide(current - 1);
     else if (e.key === "ArrowRight") showSlide(current + 1);
+    else if (e.key === "Tab") {
+      var controls = Array.prototype.slice.call(lb.querySelectorAll("button"));
+      var index = controls.indexOf(document.activeElement);
+      e.preventDefault();
+      controls[(index + (e.shiftKey ? controls.length - 1 : 1)) % controls.length].focus();
+    }
   });
 
-  /* ---------- Hero video + parallax scroll ---------- */
-  var heroEl = document.querySelector(".hero");
-  var heroMedia = document.querySelector(".hero-media");
-  var heroContent = document.querySelector(".hero-content");
+  /* ---------- Hero video: show only after a decoded frame is ready ---------- */
   var heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
     if (reduce) {
@@ -1321,50 +1401,36 @@
       document.body.classList.add("no-hero-video");
     } else {
       heroVideo.muted = true;
-      var pp = heroVideo.play();
-      if (pp && pp.catch) pp.catch(function () { document.body.classList.add("no-hero-video"); });
+      heroVideo.addEventListener("playing", function () {
+        var showFrame = function () { heroVideo.classList.add("is-playing"); };
+        if (heroVideo.requestVideoFrameCallback) heroVideo.requestVideoFrameCallback(showFrame);
+        else showFrame();
+      });
+      heroVideo.addEventListener("error", function () { document.body.classList.add("no-hero-video"); });
+      var heroVisible = true;
+      var heroReady = false;
+      var syncHeroVideo = function () {
+        if (!heroReady || document.hidden || !heroVisible) { heroVideo.pause(); return; }
+        var pp = heroVideo.play();
+        if (pp && pp.catch) pp.catch(function () { document.body.classList.add("no-hero-video"); });
+      };
+      // Start after the opening photograph, without waiting for unrelated assets.
+      var heroPoster = document.querySelector(".hero-fallback");
+      var posterReady = heroPoster && heroPoster.decode ? heroPoster.decode().catch(function () {}) : Promise.resolve();
+      posterReady.then(function () {
+        heroReady = true;
+        syncHeroVideo();
+      });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          heroVisible = entries[0].isIntersecting;
+          syncHeroVideo();
+        }).observe(heroVideo);
+      }
+      document.addEventListener("visibilitychange", syncHeroVideo);
+      syncHeroVideo();
     }
   }
-  if (!reduce && heroEl && heroMedia) {
-    var hticking = false;
-    var onHeroParallax = function () {
-      if (hticking) return;
-      hticking = true;
-      requestAnimationFrame(function () {
-        var h = heroEl.offsetHeight || window.innerHeight;
-        var p = Math.min(1, Math.max(0, window.scrollY / h));
-        heroMedia.style.transform = "scale(" + (1 + p * 0.12).toFixed(4) + ") translateY(" + (p * 4).toFixed(2) + "%)";
-        if (heroContent) {
-          heroContent.style.transform = "translateY(" + (p * -38).toFixed(1) + "px)";
-          heroContent.style.opacity = Math.max(0, 1 - p * 1.15).toFixed(3);
-        }
-        hticking = false;
-      });
-    };
-    window.addEventListener("scroll", onHeroParallax, { passive: true });
-    onHeroParallax();
-  }
-
-  /* ---------- Languages: staggered reveal as you scroll ---------- */
-  var langItems = document.querySelectorAll(".lang-list li");
-  if (langItems.length && !reduce && "IntersectionObserver" in window) {
-    langItems.forEach(function (li, i) {
-      li.classList.add("reveal");
-      li.style.transitionDelay = ((i % 3) * 70 + Math.floor(i / 3) * 55) + "ms";
-    });
-    var lio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          var el = e.target;
-          el.classList.add("in");
-          lio.unobserve(el);
-          setTimeout(function () { el.classList.remove("reveal", "in"); el.style.transitionDelay = ""; }, 950);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
-    langItems.forEach(function (li) { lio.observe(li); });
-  }
-
   /* ---------- Footer year ---------- */
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
@@ -1399,20 +1465,7 @@
       if (pr && pr.catch) pr.catch(function () {});
     }
 
-    // Browsers block sound until the visitor interacts, so start on the very
-    // first gesture anywhere (scroll / tap / click / key). This is as close to
-    // "plays on entry" as browser autoplay policy allows, and it keeps the mp3
-    // out of the initial load (preload stays "none" until that first gesture).
-    var GESTURES = ["pointerdown", "keydown", "touchstart", "wheel", "scroll"];
-    function removeFirstGesture() {
-      GESTURES.forEach(function (ev) { window.removeEventListener(ev, firstGesture, true); });
-    }
-    function firstGesture(e) {
-      if (audioBtn.contains(e.target)) { removeFirstGesture(); return; }
-      if (audio.paused) audioPlay();
-      removeFirstGesture();
-    }
-    GESTURES.forEach(function (ev) { window.addEventListener(ev, firstGesture, true); });
+    // Music starts only when the visitor chooses the audio control.
 
     audioBtn.addEventListener("click", function () {
       if (audio.paused || audio.muted) audioPlay();
