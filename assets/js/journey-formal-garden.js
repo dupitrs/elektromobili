@@ -1,6 +1,6 @@
-import { route, roadDistance, hedgeContours } from "./years-routes.js?v=20260927-mobile-1";
-import { rundaleFragments, gardenRoadWidth } from "./rundale-garden-plan.js?v=20260927-mobile-1";
-import { yearsJoinPlacement } from "./years-layout.js?v=20260927-mobile-1";
+import { route, roadDistance, hedgeContours } from "./years-routes.js?v=20260927-mobile-2";
+import { rundaleFragments, gardenRoadWidth } from "./rundale-garden-plan.js?v=20260927-mobile-2";
+import { yearsJoinPlacement } from "./years-layout.js?v=20260927-mobile-2";
 
 export const gardenProjection = 43 / Math.hypot(43, 36);
 const elevation = 36 / 43;

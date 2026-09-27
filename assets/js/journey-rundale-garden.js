@@ -1,5 +1,5 @@
-import { route, roadDistance } from "./years-routes.js?v=20260927-mobile-1";
-import { rundaleFragments, rundalePlan, gardenRoadWidth } from "./rundale-garden-plan.js?v=20260927-mobile-1";
+import { route, roadDistance } from "./years-routes.js?v=20260927-mobile-2";
+import { rundaleFragments, rundalePlan, gardenRoadWidth } from "./rundale-garden-plan.js?v=20260927-mobile-2";
 
 export const gardenProjection = 43 / Math.hypot(43, 36);
 

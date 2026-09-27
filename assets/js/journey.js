@@ -1,10 +1,10 @@
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-1";
-import { gardenPainter } from "./journey-start.js?v=20260927-mobile-1";
-import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-1";
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-1";
-import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-1";
-import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-1";
-import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-1";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-2";
+import { gardenPainter } from "./journey-start.js?v=20260927-mobile-2";
+import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-2";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-2";
+import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-2";
+import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-2";
+import { viewportHeight, onViewportChange, phone } from "./viewport.js?v=20260927-mobile-2";
 
 const motion = matchMedia("(prefers-reduced-motion: reduce)");
 const K = 43 / Math.hypot(43, 36), ELEVATION = 36 / Math.hypot(43, 36);
@@ -12,6 +12,18 @@ const TAU = Math.PI * 2, HITCH = 4.02;
 const mix = (a, b, t) => a + (b - a) * t;
 const clamp = n => Math.max(0, Math.min(1, n));
 const smooth = t => t * t * t * (10 + t * (-15 + 6 * t));
+// Phones load the train's atlases only once the first screen is done.
+function afterFirstScreen() {
+  return new Promise(resolve => {
+    const whenIdle = () => typeof requestIdleCallback === "function"
+      ? requestIdleCallback(resolve, { timeout: 2000 }) : setTimeout(resolve, 300);
+    if (document.readyState === "complete") whenIdle();
+    else addEventListener("load", whenIdle, { once: true });
+  });
+}
+
+const CROSSES_CONTENT = new Set(["valodas", "apmeklejums"]);
+
 const main = document.querySelector("main");
 const sections = [...main.querySelectorAll(":scope > section[id]")];
 
@@ -70,7 +82,7 @@ function setupJourney() {
     const ordered = [...bands].sort((a, b) => Math.abs(a.top - scrollY) - Math.abs(b.top - scrollY));
     for (const band of ordered) {
       if (!band.options) continue;
-      const requested = band.key + ":" + Boolean(band.yearsJoin?.image);
+      const requested = band.key + ":" + Boolean(band.yearsJoin?.image) + ":" + Boolean(band.yearsJoin?.backdrop);
       if (band.requested === requested) continue;
       band.requested = requested;
       band.element.classList.remove("is-painted");
@@ -128,10 +140,11 @@ function setupJourney() {
     return { x: (front.x + back.x) / 2, z: (front.z + back.z) / 2,
       angle: -Math.atan2(front.z - back.z, front.x - back.x), atlas };
   }
+  const focusOffset = () => header + height * .34;
   function travelDistance(y) {
     // Park before the final road ends; scrolling into the footer must not
     // extrapolate the train onto an unpainted stretch beyond the garden.
-    const focus = header + height * .34;
+    const focus = focusOffset();
     const park = routeLength - 2.8;
     const parkY = rootTop + at(park).z * K * unit;
     const remaining = Math.max(0, parkY - maxScroll - focus);
@@ -151,8 +164,28 @@ function setupJourney() {
     // The negative bottom margin makes this sticky layer's margin-box zero
     // high. Its bottom constraint is the garden edge, not edge minus height.
     const layerTop = Math.min(Math.max(header, rootTop - y), rootBottom - y);
-    return [vehicle(distance, sprites.car), vehicle(distance - HITCH, sprites.trailer)]
+    const pose = [vehicle(distance, sprites.car), vehicle(distance - HITCH, sprites.trailer)]
       .map(v => ({ ...v, x: v.x * unit, y: rootTop + v.z * K * unit - y - layerTop }));
+    if (!phone) return pose;
+    // A phone scrolls on its own thread, so a position derived from scrollY
+    // here is always a frame or two behind the page: on iOS the train visibly
+    // slid down the garden and left its road. The sticky layer already holds
+    // the focus line steady without any script, so on a phone the train keeps
+    // that line exactly and only its heading and lane follow the route.
+    const drift = pose[0].y - (focusOffset() - layerTop);
+    return pose.map(v => ({ ...v, y: v.y - drift }));
+  }
+
+  /* Between the gardens the route runs through the margin beside the text,
+     which is wide enough to drive in on a laptop. A phone has 12 px there, so
+     the train drove half off the screen with no road under it. On a phone it
+     therefore shows while it is in a garden and steps aside for the text and
+     for the 17, whose own fleet is driving on its pinned map. */
+  let trainAway = false;
+  function holdTrain(away) {
+    if (away === trainAway) return;
+    trainAway = away;
+    canvas.style.opacity = away ? "0" : "1";
   }
 
   function localBox(element, section) {
@@ -164,6 +197,7 @@ function setupJourney() {
     const section = stop.section, desktop = width >= 768;
     const years = section.id === "gadi" ? layoutYears(section) : null;
     const h = section.getBoundingClientRect().height;
+    stop.height = h;
     let entryX = left, exitX = left, path;
     if (section.id === "pieredze" && desktop) {
       const a = localBox(section.querySelector(".exp-intro"), section);
@@ -187,7 +221,7 @@ function setupJourney() {
     } else if (years) {
       const stage = section.querySelector(".years-stage");
       entryX = exitX = yearsView(stage.clientWidth, stage.clientHeight).laneX;
-      stop.height = h; stop.pinHeight = stage.clientHeight; stop.pinTop = years.top;
+      stop.pinHeight = stage.clientHeight; stop.pinTop = years.top;
       stop.hold = Math.max(0, h - stop.pinHeight);
     } else if (["galerija", "apmeklejums", "kontakti"].includes(section.id)) {
       entryX = exitX = right;
@@ -264,6 +298,7 @@ function setupJourney() {
     for (const band of bands) {
       band.top = band.element.getBoundingClientRect().top + scrollY;
       const bandHeight = band.element.getBoundingClientRect().height;
+      band.height = bandHeight;
       const { entryX, exitX } = band;
       const key = [band.index, width, bandHeight, unit, entryX, exitX, pixelRatio, band.yearsJoin?.stageHeight].join();
       if (key !== band.key) {
@@ -331,7 +366,14 @@ function setupJourney() {
     frame = 0;
     if (!active || !sprites || !points.length || motion.matches || document.hidden || failed) return;
     const distance = travelDistance(scrollY);
-    drawTrain(trainPose(scrollY, distance)); updateLanguages(distance);
+    const focusY = scrollY + focusOffset();
+    const inGarden = bands.some(band => focusY > band.top && focusY < band.top + band.height);
+    const stop = stops.find(s => focusY >= s.top && focusY < s.top + s.height);
+    holdTrain(phone && !inGarden && !CROSSES_CONTENT.has(stop?.section.id));
+    // Drawing continues through the fade, so the train never shows a frame
+    // that belongs to a scroll position the page has already left behind.
+    drawTrain(trainPose(scrollY, distance));
+    updateLanguages(distance);
     const visit = stops.find(stop => stop.section.id === "apmeklejums");
     weather.update({ rearY: rootTop + at(distance - HITCH - 1.68).z * K * unit - visit.top });
   }
@@ -355,6 +397,7 @@ function setupJourney() {
         painter.postMessage({ index: band.index, canvas: surface }, [surface]);
       }
       requestPaint();
+      if (phone) await afterFirstScreen();
       sprites = await loadGardenSprites();
       if (failed) return;
       measure(); root.classList.add("is-ready");

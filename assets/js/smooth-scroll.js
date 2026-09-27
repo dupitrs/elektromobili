@@ -1,5 +1,5 @@
 import Lenis from "./vendor/lenis.mjs";
-import { viewportHeight } from "./viewport.js?v=20260927-mobile-1";
+import { viewportHeight } from "./viewport.js?v=20260927-mobile-2";
 
 // Smooth mouse/trackpad input; touch keeps the platform's native momentum.
 // lerp .1 is the exponential follow used on itsoffbrand.com (the Lenis default):

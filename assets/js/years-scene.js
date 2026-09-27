@@ -1,8 +1,8 @@
-import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-1";
-import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-1";
-import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-1";
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-1";
-import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-1";
+import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-2";
+import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-2";
+import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-2";
+import { scroll } from "./smooth-scroll.js?v=20260927-mobile-2";
+import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-2";
 
 /* The camera never moves. Pre-rendered views of the original 3D models keep
    their detail without rebuilding geometry or shadows while the page scrolls. */

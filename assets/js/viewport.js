@@ -35,6 +35,10 @@ let height = readHeight(), width = onPage ? innerWidth : 0;
 // probe forces layout, which no scroll frame should have to pay for.
 export function viewportHeight() { return height; }
 
+/* A phone by its short edge, so turning it sideways does not change the
+   answer. Anything that has to behave differently there asks this. */
+export const phone = onPage && Math.min(innerWidth, innerHeight) < 700;
+
 const listeners = new Set();
 let timer = 0;
 

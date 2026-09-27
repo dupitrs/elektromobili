@@ -1395,7 +1395,14 @@
   /* ---------- Hero video: show only after a decoded frame is ready ---------- */
   var heroVideo = document.querySelector(".hero-video");
   if (heroVideo) {
-    if (reduce) {
+    // On a phone the opening film costs 811 kB on the same narrow pipe that the
+    // gardens, fonts and photographs are still waiting for, and it keeps a
+    // video decoder running behind the first screen. The poster is the same
+    // frame, so the opening looks the way it should and arrives sooner.
+    var link = navigator.connection || {};
+    var onPhone = Math.min(window.innerWidth, window.innerHeight) < 700;
+    var sparingData = link.saveData === true || /(^|-)2g$/.test(link.effectiveType || "");
+    if (reduce || onPhone || sparingData) {
       heroVideo.removeAttribute("autoplay");
       try { heroVideo.pause(); } catch (e) {}
       document.body.classList.add("no-hero-video");

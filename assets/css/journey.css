@@ -63,7 +63,7 @@
 }
 .journey-on .years { background: var(--years-ground); }
 .journey-chapters { position: relative; }
-.journey-guide canvas { position: absolute; top: 0; left: 0; max-width: none; }
+.journey-guide canvas { position: absolute; top: 0; left: 0; max-width: none; transition: opacity .3s var(--ease, ease); }
 .journey-on .lang-list { column-gap: clamp(32px, 4.5vw, 64px); }
 @media (min-width: 768px) {
   .journey-on .lang-head {
