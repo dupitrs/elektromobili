@@ -22,8 +22,9 @@ export function makeGardenBand({ index, width, height, unit, entryX, exitX, year
   };
   // Keep the entrance straight between the two side fountains. Only the
   // final approach bends toward the next section's existing entrance.
+  const fountainBend = index === 0 && width < 768 ? mid + 6 + roadWidth / 2 + 4 : mid + 5;
   const path = addRoad(Math.abs(entry - exit) < .01 ? [[entry, 0], [exit, depth]] :
-    [[entry, 0], [entry, index === 0 ? mid + 5 : north], [exit, south], [exit, depth]], 4);
+    [[entry, 0], [entry, index === 0 ? fountainBend : north], [exit, south], [exit, depth]], 4);
   // Layout needs only the driving path; planting is built near the viewport.
   if (pathOnly) return { path };
   const mirror = points => points.map(([x, z]) => [worldWidth - x, z]);

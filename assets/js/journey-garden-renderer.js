@@ -1,5 +1,5 @@
 import { decodeImage } from "./garden-assets.js?v=20260927-mobile-3";
-import { gardenProjection as K } from "./journey-formal-garden.js?v=20260927-mobile-3";
+import { gardenProjection as K } from "./journey-formal-garden.js?v=20260928-mobile-6";
 import { yearsJoinPlacement } from "./years-layout.js?v=20260927-mobile-3";
 
 let decorations;

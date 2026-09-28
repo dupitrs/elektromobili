@@ -53,6 +53,7 @@ async function run() {
       console.log(`${engine} ${width}: page loaded`);
       assert(await page.locator('#siteLoader').isVisible(),'loader not shown while scenes prepare');
       assert((await page.locator('#siteLoaderPercent').textContent()).endsWith('%'),'loader progress missing');
+      assert(await page.locator('video').evaluate(v=>v.paused),'video started behind the loader');
       if(width===390)await page.screenshot({path:`/tmp/site-loader-${engine}.png`});
       await page.waitForFunction(()=>document.querySelectorAll('.journey-band.is-painted').length===8 && document.querySelector('.years.is-3d-ready'),{},{timeout:45000}).catch(async error=>{console.log(await page.evaluate(()=>({paint:__paints,years:document.querySelector('.years')?.className,journey:document.querySelector('.garden-journey')?.className,bands:[...document.querySelectorAll('.journey-band')].map(e=>e.className)})));throw error});
       await page.waitForFunction(()=>document.getElementById('siteLoaderPercent')?.textContent==='100%',{},{timeout:30000});
@@ -63,6 +64,10 @@ async function run() {
       await page.locator('#heroVideoToggle').click();
       await page.waitForFunction(()=>!document.querySelector('video').paused);
       if(touch)assert(await page.locator('#heroVideoToggle').evaluate(e=>e.getBoundingClientRect().bottom<=innerHeight),'video control below first screen');
+      if(width===390){
+        await page.evaluate(()=>{const b=document.querySelector('.journey-band');scrollTo({top:scrollY+b.getBoundingClientRect().top+b.offsetHeight/2-innerHeight/2,behavior:'instant'})});
+        await settle(page);await page.screenshot({path:`/tmp/first-garden-${engine}.png`});
+      }
       const before = await page.evaluate(()=>({layouts:__layoutCount,paints:__paints.length,heights:[...document.querySelectorAll('.journey-band')].map(e=>e.offsetHeight)}));
       await page.evaluate(()=>scrollTo({top:850,behavior:'instant'}));await settle(page);
       // If the next animation frame is late, both road and train must still
@@ -80,6 +85,13 @@ async function run() {
         if(width===390)await page.screenshot({path:`/tmp/train-content-${engine}.png`});
         assert.equal(await page.locator('.journey-guide canvas').evaluate(e=>getComputedStyle(e).opacity),'1','train disappeared over content');
         assert.equal(await page.locator('.journey-band.years-exit').evaluate(e=>getComputedStyle(e,'::after').display),'none','post-17 map has an entrance overlay');
+        if(width<768)assert.equal(await page.locator('.journey-band.years-exit').evaluate(e=>getComputedStyle(e).maskImage),'none','post-17 map has an entrance fade');
+        await page.evaluate(()=>{const t=document.querySelector('.ticket').getBoundingClientRect();scrollTo({top:scrollY+t.top+t.height/2-(70+innerHeight*.34),behavior:'instant'})});
+        await settle(page);
+        if(width<768){
+          assert(await page.evaluate(()=>{const a=document.querySelector('.journey-guide canvas').getBoundingClientRect(),b=document.querySelector('.ticket').getBoundingClientRect();return a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top}),'train did not cross the ride ticket');
+          if(width===390||width===320)await page.screenshot({path:`/tmp/ride-card-${engine}-${width}.png`});
+        }
         if(width===390)for(const id of ['ieklauts','apmeklejums','valodas','gadi','galerija','kontakti']){
           await page.evaluate(id=>{const s=document.getElementById(id);scrollTo({top:s.getBoundingClientRect().top+scrollY+s.offsetHeight/2-innerHeight*.34,behavior:'instant'})},id);
           await settle(page);

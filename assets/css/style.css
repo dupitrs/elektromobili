@@ -465,8 +465,23 @@ main > .section + .section:not(.contact)::before {
   .ride-points li { grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
   .ride-emblem { width: 44px; height: 44px; }
   .ride-emblem svg { width: 24px; height: 24px; }
-  .ride-photo img { aspect-ratio: 1.35; }
-  .ticket { max-width: none; margin-top: 16px; }
+  .ride-photo img { aspect-ratio: 1.25; object-position: 67% center; }
+  .ticket {
+    width: calc(100% - 12px); max-width: none; margin: -36px 0 0;
+    padding-right: 54px; border-radius: var(--radius);
+    box-shadow: 0 16px 38px rgb(48 54 32 / .13);
+  }
+  .ticket::after {
+    content: ""; position: absolute; top: 0; bottom: 0; right: 32px;
+    border-left: 2px dashed rgb(104 109 79 / .28); pointer-events: none;
+  }
+  .ticket-price { padding-top: 2px; padding-bottom: 10px; }
+  .ticket-rows { padding-top: 8px; }
+  .ticket-rows > div { padding-block: 7px; }
+  .ticket-rows dt { font-size: .7rem; }
+  .ticket-rows dd { font-size: 1rem; }
+  .ticket-origin dd { font-size: .94rem; }
+  .ticket-cta { padding-top: 8px; }
   .lang-head { margin-bottom: 36px; }
   .lang-head .lead { font-size: .9375rem; }
   .lang-list { gap: 12px; }

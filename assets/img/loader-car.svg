@@ -1,13 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 82">
-  <path fill="#e4e9e6" d="M16 23h121l12 4-2 4H13l3-8Z"/>
-  <path fill="#d4ddd8" d="M20 29h5v29h-5zm39 0h4v29h-4zm39 0h4v29h-4zm32 0h4v28h-4z"/>
-  <path fill="#4e5956" d="M132 32h4l9 22h-7z"/>
-  <path fill="#aebcb5" d="M31 43c0-4 2-6 5-6s5 2 5 6v11H31zm30 0c0-4 2-6 5-6s5 2 5 6v11H61zm30 0c0-4 2-6 5-6s5 2 5 6v11H91z"/>
-  <path fill="#f1f4f2" d="M12 54h128c6 0 10 4 10 9v3H12c-4 0-7-3-7-7 0-3 3-5 7-5Z"/>
-  <path fill="#cbd5cf" d="M5 62h145v4H12c-4 0-7-2-7-4Z"/>
-  <path fill="#f8f9f7" d="M139 56h7c2 0 3 2 3 4v1h-10z"/>
-  <circle cx="34" cy="66" r="10" fill="#414b49"/>
-  <circle cx="34" cy="66" r="5" fill="#c4cfca"/>
-  <circle cx="119" cy="66" r="10" fill="#414b49"/>
-  <circle cx="119" cy="66" r="5" fill="#c4cfca"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 90">
+  <!-- Rear passenger trailer: open sides, three seat rows and scalloped canopy. -->
+  <path fill="#d4dcd7" d="M10 20Q54 8 105 19l5 3-2 7-7-2-5 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 2-6-3-6 1-2-7Z"/>
+  <path fill="#f1f4f2" d="M12 20Q55 12 105 20l-3 2H14Z"/>
+  <path fill="#384542" d="M17 28h3v34h-3zm41 1h3v33h-3zm43-1h3v34h-3z"/>
+  <path fill="#c7d0ca" d="M24 47q0-6 5-6h8q5 0 5 6v11H24zm27 0q0-6 5-6h8q5 0 5 6v11H51zm27 0q0-6 5-6h8q5 0 5 6v11H78z"/>
+  <path fill="#f6f8f5" d="M8 57h99v13H8q-3 0-3-3v-7q0-3 3-3Z"/>
+  <path fill="#b9c4bd" d="M39 58v12m27-12v12m29-12v12" stroke="#b9c4bd" stroke-width="2"/>
+  <path fill="#384542" d="M6 70h102v4H6z"/>
+  <circle cx="28" cy="73" r="10" fill="#35413e"/><circle cx="28" cy="73" r="5" fill="#aebbb4"/>
+  <circle cx="88" cy="73" r="10" fill="#35413e"/><circle cx="88" cy="73" r="5" fill="#aebbb4"/>
+  <!-- The real vehicle has a visible tow bar between the two bodies. -->
+  <path d="M107 68h8l7-5h8" fill="none" stroke="#35413e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Front electric car: passenger bench, open cab and slanted windshield. -->
+  <path fill="#d4dcd7" d="M124 20q49-11 98-1l9 3-2 7-8-2-5 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 3-6-3-6 2-5-3-4 1-2-7Z"/>
+  <path fill="#f1f4f2" d="M127 20q49-8 96 0l-3 2h-91Z"/>
+  <path fill="#384542" d="M132 28h3v34h-3zm50 1h3v33h-3z"/>
+  <path fill="#c7d0ca" d="M139 47q0-6 5-6h9q5 0 5 6v13h-19zm28 0q0-6 5-6h8q5 0 5 6v13h-18z"/>
+  <path fill="#b9c4bd" d="M207 34h15l8 24h-16z"/>
+  <path d="m207 34 8 25" fill="none" stroke="#35413e" stroke-width="3"/>
+  <path fill="#f6f8f5" d="M124 57h86l13-2 13 5 2 9h-114q-3 0-3-3v-6q0-3 3-3Z"/>
+  <path fill="#c7d0ca" d="M215 57h14l7 4h-21z"/>
+  <path fill="#384542" d="M122 69h116v5H122z"/>
+  <path fill="#f4f6f3" d="M230 62h7v3h-7z"/>
+  <circle cx="145" cy="73" r="10" fill="#35413e"/><circle cx="145" cy="73" r="5" fill="#aebbb4"/>
+  <circle cx="218" cy="73" r="10" fill="#35413e"/><circle cx="218" cy="73" r="5" fill="#aebbb4"/>
 </svg>

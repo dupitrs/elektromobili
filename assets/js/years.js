@@ -10,7 +10,7 @@ if (section) {
 
   async function load() {
     try {
-      const module = await import("./years-scene.js?v=20260927-mobile-3");
+      const module = await import("./years-scene.js?v=20260928-mobile-5");
       await module.createGarden(section);
     } catch (error) {
       section.classList.remove("is-scroll-scene");

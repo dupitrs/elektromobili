@@ -110,6 +110,8 @@
   .journey-band.years-exit::after { display: none; }
 }
 @media (max-width: 767px) {
+  .journey-on.is-ready .journey-guide { z-index: 4; }
+  .journey-on .journey-band.years-exit { -webkit-mask-image: none; mask-image: none; }
   .journey-on.is-ready .lang-list li { --zip-lift: 18px; }
   .journey-on .lang-head { margin-bottom: var(--language-turn-space, 196px); }
 }

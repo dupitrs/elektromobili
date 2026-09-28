@@ -18,6 +18,10 @@ const motionReduced = matchMedia("(prefers-reduced-motion: reduce)");
 
 function nativeScroll() {
   const listeners = new Set();
+  let glideFrame = 0;
+  const cancelGlide = () => { if (glideFrame) cancelAnimationFrame(glideFrame); glideFrame = 0; };
+  addEventListener("touchstart", cancelGlide, { passive: true });
+  addEventListener("wheel", cancelGlide, { passive: true });
   // Browsers already fire scroll once per frame while a finger drags, and the
   // scenes only flag a redraw here, so there is nothing to throttle.
   addEventListener("scroll", () => { for (const listener of [...listeners]) listener(); }, { passive: true });
@@ -28,20 +32,22 @@ function nativeScroll() {
     off(event, listener) { listeners.delete(listener); },
     // The browser owns the layout; there is nothing to recompute or pause.
     resize() {}, stop() {}, start() {},
-    scrollTo(target, { onComplete } = {}) {
-      scrollTo({ top: target, behavior: motionReduced.matches ? "auto" : "smooth" });
-      if (!onComplete) return;
-      let settled = false;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        removeEventListener("scrollend", finish);
-        onComplete();
+    scrollTo(target, { duration = 1, easing = t => t, onComplete } = {}) {
+      cancelGlide();
+      const from = scrollY, distance = target - from;
+      if (motionReduced.matches || Math.abs(distance) < 1) {
+        window.scrollTo({ top: target, behavior: "instant" });
+        onComplete?.();
+        return;
+      }
+      const started = performance.now(), time = duration * 1000;
+      const step = now => {
+        const progress = Math.min(1, (now - started) / time);
+        window.scrollTo({ top: from + distance * easing(progress), behavior: "instant" });
+        if (progress < 1) glideFrame = requestAnimationFrame(step);
+        else { glideFrame = 0; onComplete?.(); }
       };
-      // Safari has no scrollend yet, so the timer is the one that usually runs.
-      const timer = setTimeout(finish, 1000);
-      addEventListener("scrollend", finish, { once: true });
+      glideFrame = requestAnimationFrame(step);
     }
   };
 }
@@ -69,7 +75,7 @@ function glide(target, onComplete) {
   const destination = anchorPosition(target);
   const distance = Math.abs(destination - scrollY);
   scroll.scrollTo(destination, {
-    duration: Math.min(1.6, .7 + distance / 3200),
+    duration: Math.min(pointerCoarse ? 1.25 : 1.6, .7 + distance / 3200),
     easing: easeInOutQuart,
     onComplete
   });

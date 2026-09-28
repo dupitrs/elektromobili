@@ -1,7 +1,7 @@
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-3";
-import { gardenPainter } from "./journey-start.js?v=20260927-mobile-3";
+import { scroll } from "./smooth-scroll.js?v=20260928-mobile-5";
+import { gardenPainter } from "./journey-start.js?v=20260928-mobile-6";
 import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=20260927-mobile-3";
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-3";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260928-mobile-6";
 import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-3";
 import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-3";
 import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-3";
@@ -174,6 +174,10 @@ function setupJourney() {
       const a = localBox(section.querySelector(".exp-intro"), section);
       const b = localBox(section.querySelector(".exp-scene"), section);
       entryX = exitX = (a.x + a.width + b.x) / 2;
+    } else if (section.id === "ieklauts" && !desktop) {
+      const ticket = localBox(section.querySelector(".ticket"), section);
+      // Travel over the ticket's clear route lane, not through its price or CTA.
+      entryX = exitX = ticket.x + ticket.width - 33;
     } else if (section.id === "valodas") {
       const list = localBox(section.querySelector(".lang-list"), section);
       exitX = list.x + list.width / 2;

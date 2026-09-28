@@ -1,7 +1,7 @@
 import { gardenRoutes } from "./years-routes.js?v=20260927-mobile-3";
 import { layoutYears, yearsView, yearsBackgroundPlacement } from "./years-layout.js?v=20260927-mobile-3";
 import { loadYearsBackground, loadGardenSprites } from "./garden-assets.js?v=20260927-mobile-3";
-import { scroll } from "./smooth-scroll.js?v=20260927-mobile-3";
+import { scroll } from "./smooth-scroll.js?v=20260928-mobile-5";
 import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-3";
 
 /* The camera never moves. Pre-rendered views of the original 3D models keep

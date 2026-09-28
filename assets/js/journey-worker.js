@@ -1,5 +1,5 @@
-import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-3";
-import { loadGardenDecor, drawGardenBand } from "./journey-garden-renderer.js?v=20260927-mobile-3";
+import { makeGardenBand } from "./journey-formal-garden.js?v=20260928-mobile-6";
+import { loadGardenDecor, drawGardenBand } from "./journey-garden-renderer.js?v=20260928-mobile-6";
 
 // Geometry and rasterization both stay off the scrolling thread. Keep only the
 // newest requested layout for each band when resizing or changing language.
@@ -26,11 +26,9 @@ async function paintNext() {
     if (error) throw error;
     let image;
     if (job.backgroundURL) {
-      background ||= fetch(job.backgroundURL).then(response => {
-        if (!response.ok) throw new Error("Garden background unavailable");
-        return response.blob();
-      }).then(blob => createImageBitmap(blob));
-      image = await background;
+      const result = await background;
+      if (result.error) throw result.error;
+      image = result.image;
     }
     // A newer resize may have arrived while assets were being decoded.
     if (!pending.has(index)) {
@@ -50,6 +48,11 @@ async function paintNext() {
 self.onmessage = ({ data }) => {
   if (data.canvas) surfaces.set(data.index, data.canvas);
   else {
+    // Download the shared 17 backdrop while the first garden bands paint.
+    if (data.backgroundURL && !background) background = fetch(data.backgroundURL).then(response => {
+      if (!response.ok) throw new Error("Garden background unavailable");
+      return response.blob();
+    }).then(blob => createImageBitmap(blob)).then(image => ({ image }), error => ({ error }));
     pending.set(data.index, data);
     paintNext();
   }
