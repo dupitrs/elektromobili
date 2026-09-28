@@ -81,7 +81,7 @@ function setupJourney() {
       const { image, ...join } = band.yearsJoin || {};
       painter.postMessage({ index: band.index, key: band.key, revision: ++band.revision,
         options: { ...band.options, yearsJoin: band.yearsJoin ? join : null },
-        backgroundURL: image?.src, pixelRatio });
+        backgroundURL: image?.src, pixelRatio: band.paintRatio });
     }
   }
 
@@ -240,6 +240,9 @@ function setupJourney() {
     unit = Math.max(8, Math.min(16, width / 96));
     root.style.setProperty("--journey-unit", unit + "px");
     pixelRatio = Math.min(devicePixelRatio || 1, 1.5);
+    // The large static gardens cost far more to paint than the small moving car.
+    // Keep the car sharp, but use fewer backing-store pixels for phone gardens.
+    const paintRatio = width < 768 ? Math.min(pixelRatio, 1.25) : pixelRatio;
     const content = stops[0].section.querySelector(".container");
     const lane = Math.max(unit * 3, (content.getBoundingClientRect().left - root.getBoundingClientRect().left) / 2);
     const languages = stops.find(stop => stop.section.id === "valodas");
@@ -269,7 +272,8 @@ function setupJourney() {
       const bandHeight = band.element.getBoundingClientRect().height;
       band.height = bandHeight;
       const { entryX, exitX } = band;
-      const key = [band.index, width, bandHeight, unit, entryX, exitX, pixelRatio, band.yearsJoin?.stageHeight].join();
+      const key = [band.index, width, bandHeight, unit, entryX, exitX, paintRatio, band.yearsJoin?.stageHeight].join();
+      band.paintRatio = paintRatio;
       if (key !== band.key) {
         band.key = key;
         band.options = { index: band.index, width, height: bandHeight, unit, entryX, exitX, yearsJoin: band.yearsJoin };

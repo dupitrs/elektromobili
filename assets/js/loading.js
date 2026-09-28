@@ -16,6 +16,7 @@
     clearTimeout(slowTimer);
     clearTimeout(window.siteLoaderFailsafe);
     root.classList.remove("is-loading");
+    document.dispatchEvent(new Event("erm:loader-finished"));
     setTimeout(() => loader.remove(), 500);
   }
 

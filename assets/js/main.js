@@ -1421,7 +1421,7 @@
       if (attempt && attempt.catch) attempt.catch(videoUI);
     }
     function syncHeroVideo() {
-      if (!heroReady || userPaused || document.hidden || !heroVisible) { heroVideo.pause(); return; }
+      if (!heroReady || userPaused || document.hidden || !heroVisible || document.documentElement.classList.contains("is-loading")) { heroVideo.pause(); return; }
       playHero();
     }
     heroVideo.addEventListener("playing", function () {
@@ -1441,6 +1441,8 @@
       else playHero(); // Directly inside the gesture when autoplay is blocked.
     });
     document.addEventListener("erm:langchange", videoUI);
+    document.addEventListener("erm:loader-finished", syncHeroVideo, { once: true });
+    document.addEventListener("erm:loader-failsafe", syncHeroVideo, { once: true });
     videoUI();
     var heroPoster = document.querySelector(".hero-fallback");
     var posterReady = heroPoster && heroPoster.decode ? heroPoster.decode().catch(function () {}) : Promise.resolve();
