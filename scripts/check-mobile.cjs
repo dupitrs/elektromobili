@@ -74,6 +74,19 @@ async function run() {
         return Math.abs(train.getBoundingClientRect().top-garden.getBoundingClientRect().top-before);
       });
       assert(drift<1,`train left road between frames: ${drift}px`);
+      if(touch){
+        await page.evaluate(()=>{const section=document.querySelector('#pieredze');scrollTo({top:section.getBoundingClientRect().top+scrollY+section.offsetHeight/2-innerHeight*.34,behavior:'instant'})});
+        await settle(page);
+        if(width===390)await page.screenshot({path:`/tmp/train-content-${engine}.png`});
+        assert.equal(await page.locator('.journey-guide canvas').evaluate(e=>getComputedStyle(e).opacity),'1','train disappeared over content');
+        assert.equal(await page.locator('.journey-band.years-exit').evaluate(e=>getComputedStyle(e,'::after').display),'none','post-17 map has an entrance overlay');
+        if(width===390)for(const id of ['ieklauts','apmeklejums','valodas','gadi','galerija','kontakti']){
+          await page.evaluate(id=>{const s=document.getElementById(id);scrollTo({top:s.getBoundingClientRect().top+scrollY+s.offsetHeight/2-innerHeight*.34,behavior:'instant'})},id);
+          await settle(page);
+          const visible=await page.locator('.journey-guide canvas').evaluate(e=>{const r=e.getBoundingClientRect();return getComputedStyle(e).opacity!=='0'&&r.right>0&&r.left<innerWidth&&r.bottom>0&&r.top<innerHeight});
+          assert(visible,`train not visible in ${id}`);
+        }
+      }
       await page.evaluate(async()=>{
         const max=document.documentElement.scrollHeight-innerHeight;
         for(const target of [max,0,max,0]) {

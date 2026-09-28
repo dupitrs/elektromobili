@@ -62,7 +62,7 @@
 }
 .journey-on .years { background: var(--years-ground); }
 .journey-chapters { position: relative; }
-.journey-guide canvas { position: absolute; top: 0; left: 0; max-width: none; transition: opacity .3s var(--ease, ease); }
+.journey-guide canvas { position: absolute; top: 0; left: 0; max-width: none; }
 .journey-on .lang-list { column-gap: clamp(32px, 4.5vw, 64px); }
 @media (min-width: 768px) {
   .journey-on .lang-head {
@@ -105,6 +105,9 @@
     --zip-side: -1;
     transform-origin: 100% 50%;
   }
+}
+@media (pointer: coarse) {
+  .journey-band.years-exit::after { display: none; }
 }
 @media (max-width: 767px) {
   .journey-on.is-ready .lang-list li { --zip-lift: 18px; }

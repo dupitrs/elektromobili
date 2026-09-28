@@ -4,17 +4,21 @@
   transition: opacity .3s ease, visibility 0s .3s;
 }
 .is-loading .site-loader { visibility: visible; opacity: 1; pointer-events: auto; transition: none; touch-action: none; }
-.site-loader-inner { display: grid; justify-items: center; gap: 26px; }
+.site-loader-inner { display: grid; justify-items: center; gap: 12px; }
 .site-loader-ring {
   --progress: 0%; position: relative; display: grid; place-items: center;
-  width: 118px; height: 118px; border-radius: 50%;
+  width: 136px; height: 136px; border-radius: 50%;
   background: conic-gradient(#962f25 var(--progress), #d8dccf 0);
 }
-.site-loader-ring::before { content: ""; position: absolute; inset: 5px; border-radius: inherit; background: #f5f6f1; }
-.site-loader-ring strong { position: relative; color: #282b27; font: 600 1.5rem/1 Manrope, sans-serif; font-variant-numeric: tabular-nums; }
-.site-loader-orbit { position: absolute; inset: -7px; animation: loader-orbit 1.8s linear infinite; }
-.site-loader-orbit::before { content: ""; position: absolute; top: 0; left: 50%; width: 7px; height: 7px; border-radius: 50%; background: #962f25; transform: translateX(-50%); }
-.site-loader-continue { min-height: 44px; padding: 10px 18px; border: 0; border-radius: 4px; background: #962f25; color: #fffaf4; font: 700 .9rem/1.4 Manrope, sans-serif; cursor: pointer; }
+.site-loader-scene { position: absolute; inset: 5px; overflow: hidden; border-radius: 50%; background: #e5ead9; }
+.site-loader-trees { position: absolute; top: 13px; left: -14px; display: flex; gap: 18px; width: max-content; animation: loader-trees 3.8s linear infinite; }
+.site-loader-trees span { flex: 0 0 38px; width: 38px; height: 38px; background: url("../img/journey/decor.webp") -38px 0 / 304px 38px no-repeat; }
+.site-loader-road { position: absolute; left: 0; right: 0; top: 86px; height: 18px; background: #e9e2cd; border-block: 1px solid rgb(104 109 79 / .18); }
+.site-loader-road::after { content: ""; position: absolute; top: 8px; left: 0; right: 0; border-top: 1px dashed rgb(104 109 79 / .28); }
+.site-loader-car { position: absolute; width: 110px; height: 110px; left: 50%; top: 23px; margin-left: -55px; background: url("../img/years/car-mobile.webp?v=20260927-mobile-3") 0 0 / 1320px 660px no-repeat; animation: loader-car 1.25s ease-in-out infinite; }
+.site-loader-percent { color: #282b27; font: 600 1.05rem/1.2 Manrope, sans-serif; font-variant-numeric: tabular-nums; }
+.site-loader-continue { min-height: 44px; margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 4px; background: #962f25; color: #fffaf4; font: 700 .9rem/1.4 Manrope, sans-serif; cursor: pointer; }
 .site-loader-continue:focus-visible { outline: 2px solid #282b27; outline-offset: 3px; }
-@keyframes loader-orbit { to { transform: rotate(1turn); } }
-@media (prefers-reduced-motion: reduce) { .site-loader-orbit { animation: none; } .site-loader { transition: none; } }
+@keyframes loader-trees { to { transform: translateX(-112px); } }
+@keyframes loader-car { 50% { transform: translateY(-2px); } }
+@media (prefers-reduced-motion: reduce) { .site-loader-trees, .site-loader-car { animation: none; } .site-loader { transition: none; } }

@@ -4,7 +4,7 @@ import { loadGardenSprites, loadYearsBackground } from "./garden-assets.js?v=202
 import { makeGardenBand } from "./journey-formal-garden.js?v=20260927-mobile-3";
 import { createVisitWeather } from "./visit-weather.js?v=20260927-mobile-3";
 import { layoutYears, yearsView, yearsBackgroundPlacement, yearsGardenJoin } from "./years-layout.js?v=20260927-mobile-3";
-import { viewportHeight, onViewportChange, phone } from "./viewport.js?v=20260927-mobile-3";
+import { viewportHeight, onViewportChange } from "./viewport.js?v=20260927-mobile-3";
 
 const motion = matchMedia("(prefers-reduced-motion: reduce)");
 const K = 43 / Math.hypot(43, 36), ELEVATION = 36 / Math.hypot(43, 36);
@@ -12,7 +12,6 @@ const TAU = Math.PI * 2, HITCH = 4.02;
 const mix = (a, b, t) => a + (b - a) * t;
 const clamp = n => Math.max(0, Math.min(1, n));
 const smooth = t => t * t * t * (10 + t * (-15 + 6 * t));
-const CROSSES_CONTENT = new Set(["valodas", "apmeklejums"]);
 
 const main = document.querySelector("main");
 const sections = [...main.querySelectorAll(":scope > section[id]")];
@@ -47,6 +46,7 @@ function setupJourney() {
   const weather = createVisitWeather(document.getElementById("apmeklejums"));
 
   const yearsIndex = stops.findIndex(stop => stop.section.id === "gadi");
+  if (yearsIndex >= 0) bands[yearsIndex + 1].element.classList.add("years-exit");
   const hasSurfaceBackground = stop => Boolean(stop && stop.section.id !== "gadi");
   bands.forEach((band, index) => {
     band.element.classList.toggle("fade-top", hasSurfaceBackground(stops[index - 1]));
@@ -157,14 +157,6 @@ function setupJourney() {
     // then moves the road and vehicles together even between script frames.
     return [vehicle(distance, sprites.car), vehicle(distance - HITCH, sprites.trailer)]
       .map(v => ({ ...v, x: v.x * unit, y: v.z * K * unit }));
-  }
-
-  // On phones, leave the text and the 17 scene clear of the page-wide train.
-  let trainAway = false;
-  function holdTrain(away) {
-    if (away === trainAway) return;
-    trainAway = away;
-    canvas.style.opacity = away ? "0" : "1";
   }
 
   function localBox(element, section) {
@@ -343,12 +335,7 @@ function setupJourney() {
     frame = 0;
     if (!active || !sprites || !points.length || motion.matches || document.hidden || failed) return;
     const distance = travelDistance(scrollY);
-    const focusY = scrollY + focusOffset();
-    const inGarden = bands.some(band => focusY > band.top && focusY < band.top + band.height);
-    const stop = stops.find(s => focusY >= s.top && focusY < s.top + s.height);
-    holdTrain(phone && !inGarden && !CROSSES_CONTENT.has(stop?.section.id));
-    // Drawing continues through the fade, so the train never shows a frame
-    // that belongs to a scroll position the page has already left behind.
+    // Keep the route vehicle visible through text, the 17 and garden joins.
     drawTrain(trainPose(scrollY, distance));
     updateLanguages(distance);
     const visit = stops.find(stop => stop.section.id === "apmeklejums");

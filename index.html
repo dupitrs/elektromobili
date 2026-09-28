@@ -47,16 +47,16 @@
   <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/playfair-display-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/fonts.css" />
-  <link rel="stylesheet" href="assets/css/loader.css?v=20260928-loader-2" />
+  <link rel="stylesheet" href="assets/css/loader.css?v=20260928-loader-3" />
 
   <link rel="stylesheet" href="assets/js/vendor/lenis.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260927-mobile-3" />
-  <link rel="stylesheet" href="assets/css/journey.css?v=20260927-mobile-3" />
+  <link rel="stylesheet" href="assets/css/journey.css?v=20260928-mobile-4" />
   <link rel="stylesheet" href="assets/css/visit-weather.css?v=20260927-mobile-3" />
   <script>document.documentElement.classList.add("is-loading"); window.siteLoaderFailsafe = setTimeout(function () { document.documentElement.classList.remove("is-loading"); document.dispatchEvent(new Event("erm:loader-failsafe")); }, 45000);</script>
 
   <script type="module" async src="assets/js/journey-start.js?v=20260927-mobile-3"></script>
-  <link rel="modulepreload" href="assets/js/journey.js?v=20260927-mobile-3" />
+  <link rel="modulepreload" href="assets/js/journey.js?v=20260928-mobile-4" />
   <link rel="modulepreload" href="assets/js/journey-formal-garden.js?v=20260927-mobile-3" />
   <link rel="modulepreload" href="assets/js/years-layout.js?v=20260927-mobile-3" />
   <link rel="modulepreload" href="assets/js/years-routes.js?v=20260927-mobile-3" />
@@ -98,9 +98,13 @@
   <div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-label="Lapa ielādējas">
     <div class="site-loader-inner">
       <div class="site-loader-ring" id="siteLoaderTrack" role="progressbar" aria-label="Lapas ielāde" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <span class="site-loader-orbit" aria-hidden="true"></span>
-        <strong id="siteLoaderPercent">0%</strong>
+        <div class="site-loader-scene" aria-hidden="true">
+          <div class="site-loader-trees"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="site-loader-road"></div>
+          <div class="site-loader-car"></div>
+        </div>
       </div>
+      <strong class="site-loader-percent" id="siteLoaderPercent">0%</strong>
       <button class="site-loader-continue" id="siteLoaderContinue" type="button" hidden>Turpināt uz lapu</button>
     </div>
   </div>
@@ -465,9 +469,9 @@
   </button>
 
   <script src="assets/js/main.js?v=20260927-mobile-3"></script>
-  <script src="assets/js/loading.js?v=20260928-loader-2"></script>
+  <script src="assets/js/loading.js?v=20260928-loader-3"></script>
   <script src="assets/js/smooth-scroll.js?v=20260927-mobile-3" type="module"></script>
-  <script src="assets/js/journey.js?v=20260927-mobile-3" type="module"></script>
+  <script src="assets/js/journey.js?v=20260928-mobile-4" type="module"></script>
   <script src="assets/js/years.js?v=20260927-mobile-3" type="module"></script>
 </body>
 </html>
