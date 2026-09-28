@@ -2,9 +2,7 @@
   const root = document.documentElement;
   const loader = document.getElementById("siteLoader");
   const percent = document.getElementById("siteLoaderPercent");
-  const bar = document.getElementById("siteLoaderBar");
   const track = document.getElementById("siteLoaderTrack");
-  const note = document.getElementById("siteLoaderNote");
   const continueButton = document.getElementById("siteLoaderContinue");
   const started = performance.now();
   let domReady = document.readyState !== "loading";
@@ -32,7 +30,7 @@
       Number(Boolean(years?.classList.contains("is-3d-ready")));
     const amount = Math.min(100, Math.round(ready / 13 * 100));
     percent.textContent = amount + "%";
-    bar.style.width = amount + "%";
+    track.style.setProperty("--progress", amount + "%");
     track.setAttribute("aria-valuenow", amount);
     if (ready === 13 && performance.now() - started >= 700) finish();
     else if (ready === 13) setTimeout(finish, 700 - (performance.now() - started));
@@ -41,7 +39,6 @@
   const timer = setInterval(check, 120);
   const slowTimer = setTimeout(() => {
     if (finished) return;
-    note.textContent = "Daļa satura vēl ielādējas";
     continueButton.hidden = false;
   }, 25000);
   continueButton.addEventListener("click", finish);
