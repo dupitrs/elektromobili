@@ -1,0 +1,28 @@
+.site-loader {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) max(22px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
+  background: #edf0df; color: #282b27; visibility: hidden; opacity: 0; pointer-events: none;
+  transition: opacity .45s ease, visibility 0s .45s;
+}
+.is-loading .site-loader { visibility: visible; opacity: 1; pointer-events: auto; transition: none; touch-action: none; }
+.site-loader-inner { width: min(100%, 620px); text-align: center; }
+.site-loader-kicker { color: #962f25; font: 700 .78rem/1.4 Manrope, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+.site-loader-title { margin-top: 12px; font: 500 clamp(2rem, 7vw, 3.4rem)/1.1 "Playfair Display", Georgia, serif; letter-spacing: -.035em; }
+.site-loader-scene { position: relative; height: clamp(150px, 26vh, 220px); margin-block: 12px 20px; overflow: hidden; isolation: isolate; }
+.site-loader-grove { position: absolute; inset: 22% 0 auto; overflow: hidden; }
+.site-loader-trees { display: flex; gap: 40px; width: max-content; animation: loader-trees 6s linear infinite; }
+.site-loader-trees span { flex: 0 0 80px; width: 80px; height: 80px; background: url("../img/journey/decor.webp") -80px 0 / 640px 80px no-repeat; }
+.site-loader-road { position: absolute; inset: 72% 0 auto; height: 28px; background: #e9e2cd; border-block: 2px solid rgb(104 109 79 / .18); transform: perspective(120px) rotateX(24deg); }
+.site-loader-road::after { content: ""; position: absolute; inset: 12px 0 auto; border-top: 2px dashed rgb(104 109 79 / .32); }
+.site-loader-car { position: absolute; z-index: 2; width: 160px; height: 160px; left: 50%; top: calc(72% - 98px); margin-left: -80px; background: url("../img/years/car-mobile.webp?v=20260927-mobile-3") 0 0 / 1920px 960px no-repeat; animation: loader-car 1.3s ease-in-out infinite; }
+.site-loader-progress { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; color: #62655f; font: 600 .85rem/1.4 Manrope, sans-serif; text-align: left; }
+.site-loader-progress strong { color: #962f25; font: 500 clamp(2rem, 7vw, 3rem)/1 "Playfair Display", Georgia, serif; font-variant-numeric: lining-nums tabular-nums; }
+.site-loader-track { height: 4px; margin-top: 12px; background: rgb(87 102 69 / .19); border-radius: 4px; overflow: hidden; }
+.site-loader-track span { display: block; height: 100%; width: 0; background: #962f25; border-radius: inherit; transition: width .22s ease-out; }
+.site-loader-note { margin-top: 14px; min-height: 1.5em; color: #62655f; font: 400 .85rem/1.5 Manrope, sans-serif; }
+.site-loader-continue { min-height: 44px; margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 4px; background: #962f25; color: #fffaf4; font: 700 .9rem/1.4 Manrope, sans-serif; cursor: pointer; }
+.site-loader-continue:focus-visible { outline: 2px solid #282b27; outline-offset: 3px; }
+@keyframes loader-trees { to { transform: translateX(-480px); } }
+@keyframes loader-car { 50% { transform: translateY(-3px); } }
+@media (max-height: 500px) { .site-loader-scene { height: 125px; margin-block: 0 10px; } .site-loader-grove { top: 10%; } .site-loader-road { top: 77%; } .site-loader-car { top: calc(77% - 98px); } }
+@media (prefers-reduced-motion: reduce) { .site-loader-trees, .site-loader-car { animation: none; } .site-loader-track span, .site-loader { transition: none; } }

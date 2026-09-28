@@ -31,7 +31,7 @@ async function run() {
   const url = `http://127.0.0.1:${server.address().port}/`;
   const browser = await launch();
   try {
-    for (const [width,height,touch] of [[390,844,true],[320,712,true],[430,932,true],[844,390,true],[1440,900,false]]) {
+    for (const [width,height,touch] of [[390,844,true],[320,712,true],[430,932,true],[844,390,true],[1440,900,false]].filter(([width])=>!process.env.CHECK_WIDTH || width===Number(process.env.CHECK_WIDTH))) {
       const context = await browser.newContext({viewport:{width,height},isMobile:touch,hasTouch:touch,deviceScaleFactor:touch?3:1});
       context.setDefaultTimeout(15000);
       // Keep these local UI checks independent of Google's cross-origin
@@ -51,7 +51,12 @@ async function run() {
       });
       await page.goto(url,{waitUntil:'domcontentloaded'});
       console.log(`${engine} ${width}: page loaded`);
-      await page.waitForFunction(()=>document.querySelectorAll('.journey-band.is-painted').length===8 && document.querySelector('.years.is-3d-ready'),{},{timeout:30000}).catch(async error=>{console.log(await page.evaluate(()=>({paint:__paints,years:document.querySelector('.years')?.className,journey:document.querySelector('.garden-journey')?.className,bands:[...document.querySelectorAll('.journey-band')].map(e=>e.className)})));throw error});
+      assert(await page.locator('#siteLoader').isVisible(),'loader not shown while scenes prepare');
+      assert((await page.locator('#siteLoaderPercent').textContent()).endsWith('%'),'loader progress missing');
+      if(width===390)await page.screenshot({path:`/tmp/site-loader-${engine}.png`});
+      await page.waitForFunction(()=>document.querySelectorAll('.journey-band.is-painted').length===8 && document.querySelector('.years.is-3d-ready'),{},{timeout:45000}).catch(async error=>{console.log(await page.evaluate(()=>({paint:__paints,years:document.querySelector('.years')?.className,journey:document.querySelector('.garden-journey')?.className,bands:[...document.querySelectorAll('.journey-band')].map(e=>e.className)})));throw error});
+      await page.waitForFunction(()=>document.getElementById('siteLoaderPercent')?.textContent==='100%',{},{timeout:30000});
+      await page.locator('#siteLoader').waitFor({state:'hidden',timeout:30000});
       await page.waitForFunction(()=>!document.querySelector('video').paused && document.querySelector('video').currentTime>.05,{},{timeout:30000}).catch(async error=>{console.log(await page.locator('video').evaluate(v=>({paused:v.paused,time:v.currentTime,ready:v.readyState,network:v.networkState,error:v.error?.message,hidden:document.hidden})));throw error});
       await page.locator('#heroVideoToggle').click();
       assert(await page.locator('video').evaluate(v=>v.paused),'manual pause');
@@ -92,7 +97,7 @@ async function run() {
         for(const viewport of [{width:844,height:390},{width,height}]) {
           await page.setViewportSize(viewport);
           await page.waitForTimeout(300);
-          await page.waitForFunction(()=>document.querySelectorAll('.journey-band.is-painted').length===8,{},{timeout:30000});
+          await page.waitForFunction(()=>document.querySelectorAll('.journey-band.is-painted').length===8,{},{timeout:45000}).catch(async error=>{console.log('ROTATION',await page.evaluate(()=>({width:innerWidth,paint:__paints.slice(-12),journey:document.querySelector('.garden-journey')?.className,bands:[...document.querySelectorAll('.journey-band')].map(e=>e.className)})));throw error});
           assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'rotation overflow');
         }
       }

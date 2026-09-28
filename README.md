@@ -220,6 +220,11 @@ Mašīnas Canvas ir absolūti novietots dārza koordinātās: pārlūka ritinā�
 mašīnu un celiņu kopā arī starp JavaScript kadriem. Telefona pārlūka joslas augstuma
 maiņa nepārrēķina dārzus; pagriežot ekrānu, izkārtojums tiek pārrēķināts.
 
+Sākuma ielādes ekrāna procenti rāda 13 gatavības posmus: DOM, fontus, ievada
+attēlu, maršruta mašīnu, astoņus uzzīmētos dārza posmus un “17” ainu. Tie nav
+lejupielādēto baitu procenti. Pēc 25 sekundēm var turpināt arī tad, ja kāds
+resurss kavējas; 45 sekunžu drošības taimeris novērš iestrēgušu ekrānu.
+
 `scripts/check-mobile.cjs` pārbauda video, bloķētas automātiskās atskaņošanas atkopšanu,
 mašīnas un ceļa sakritību starp kadriem, dārzu stabilitāti strauji ritinot,
 pārlūka joslas izmēra maiņu, navigāciju, galeriju, valodas un samazinātu kustību.

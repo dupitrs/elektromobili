@@ -47,11 +47,13 @@
   <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/playfair-display-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/fonts.css" />
+  <link rel="stylesheet" href="assets/css/loader.css?v=20260928-loader-1" />
 
   <link rel="stylesheet" href="assets/js/vendor/lenis.css" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260927-mobile-3" />
   <link rel="stylesheet" href="assets/css/journey.css?v=20260927-mobile-3" />
   <link rel="stylesheet" href="assets/css/visit-weather.css?v=20260927-mobile-3" />
+  <script>document.documentElement.classList.add("is-loading"); window.siteLoaderFailsafe = setTimeout(function () { document.documentElement.classList.remove("is-loading"); document.dispatchEvent(new Event("erm:loader-failsafe")); }, 45000);</script>
 
   <script type="module" async src="assets/js/journey-start.js?v=20260927-mobile-3"></script>
   <link rel="modulepreload" href="assets/js/journey.js?v=20260927-mobile-3" />
@@ -93,6 +95,26 @@
   </script>
 </head>
 <body>
+  <div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-label="Lapa ielādējas">
+    <div class="site-loader-inner">
+      <p class="site-loader-kicker">Elektromobilis Rundālē</p>
+      <h2 class="site-loader-title">Gatavojam braucienu</h2>
+      <div class="site-loader-scene" aria-hidden="true">
+        <div class="site-loader-grove"><div class="site-loader-trees">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div></div>
+        <div class="site-loader-road"></div>
+        <div class="site-loader-car"></div>
+      </div>
+      <div class="site-loader-progress">
+        <span>Ielādējas</span><strong id="siteLoaderPercent">0%</strong>
+      </div>
+      <div class="site-loader-track" id="siteLoaderTrack" role="progressbar" aria-label="Lapas ielāde" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="siteLoaderBar"></span></div>
+      <p class="site-loader-note" id="siteLoaderNote">Sagatavojam dārza karti</p>
+      <button class="site-loader-continue" id="siteLoaderContinue" type="button" hidden>Turpināt uz lapu</button>
+    </div>
+  </div>
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Pāriet uz saturu</a>
 
   <!-- ===== Header ===== -->
@@ -454,6 +476,7 @@
   </button>
 
   <script src="assets/js/main.js?v=20260927-mobile-3"></script>
+  <script src="assets/js/loading.js?v=20260928-loader-1"></script>
   <script src="assets/js/smooth-scroll.js?v=20260927-mobile-3" type="module"></script>
   <script src="assets/js/journey.js?v=20260927-mobile-3" type="module"></script>
   <script src="assets/js/years.js?v=20260927-mobile-3" type="module"></script>
